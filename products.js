@@ -116,6 +116,29 @@ function newProduct(event) {
   document.getElementById("product-form").reset();
 }
 
+function createCell(text, className = "") {
+  const cell = document.createElement("td");
+  cell.textContent = text;
+
+  if (className) {
+    cell.className = className;
+  }
+
+  return cell;
+}
+
+function createActionIcon({ title, className, onClick }) {
+  const icon = document.createElement("i");
+
+  if (title) {
+    icon.title = title;
+  }
+
+  icon.className = className;
+  icon.addEventListener("click", onClick);
+
+  return icon;
+}
 
 function renderProducts(products) {
   const prodTableBody = document.getElementById("tableBody");
@@ -134,18 +157,28 @@ function renderProducts(products) {
       prodRow.dataset.prodPrice = product.prodPrice;
       prodRow.dataset.prodSold = product.prodSold;
 
-      prodRow.innerHTML = `
-          <td>${product.prodID}</td>
-          <td>${product.prodName}</td>
-          <td>${product.prodDesc}</td>
-          <td>${product.prodCat}</td>
-          <td>$${product.prodPrice.toFixed(2)}</td>
-          <td>${product.prodSold}</td>
-          <td class="action">
-            <i title="Edit" onclick="editRow('${product.prodID}')" class="edit-icon fa-solid fa-pen-to-square"></i>
-            <i onclick="deleteProduct('${product.prodID}')" class="delete-icon fas fa-trash-alt"></i>
-          </td>
-      `;
+      prodRow.appendChild(createCell(product.prodID));
+      prodRow.appendChild(createCell(product.prodName));
+      prodRow.appendChild(createCell(product.prodDesc));
+      prodRow.appendChild(createCell(product.prodCat));
+      prodRow.appendChild(createCell(`$${product.prodPrice.toFixed(2)}`));
+      prodRow.appendChild(createCell(String(product.prodSold)));
+
+      const actionCell = document.createElement("td");
+      actionCell.className = "action";
+
+      actionCell.appendChild(createActionIcon({
+        title: "Edit",
+        className: "edit-icon fa-solid fa-pen-to-square",
+        onClick: () => editRow(product.prodID),
+      }));
+
+      actionCell.appendChild(createActionIcon({
+        className: "delete-icon fas fa-trash-alt",
+        onClick: () => deleteProduct(product.prodID),
+      }));
+
+      prodRow.appendChild(actionCell);
       prodTableBody.appendChild(prodRow);
   });
 }

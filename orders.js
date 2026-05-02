@@ -137,6 +137,30 @@ function newOrder(event) {
   document.getElementById("order-form").reset();
 }
 
+function createCell(text, className = "") {
+    const cell = document.createElement("td");
+    cell.textContent = text;
+
+    if (className) {
+        cell.className = className;
+    }
+
+    return cell;
+}
+
+function createActionIcon({ title, className, onClick }) {
+    const icon = document.createElement("i");
+
+    if (title) {
+        icon.title = title;
+    }
+
+    icon.className = className;
+    icon.addEventListener("click", onClick);
+
+    return icon;
+}
+
 
 function renderOrders(orders) {
     const orderTableBody = document.getElementById("tableBody");
@@ -169,23 +193,41 @@ function renderOrders(orders) {
       const formattedTaxes = typeof order.taxes === 'number' ? `$${order.taxes.toFixed(2)}` : '';
       const formattedTotal = typeof order.orderTotal === 'number' ? `$${order.orderTotal.toFixed(2)}` : '';
 
-      orderRow.innerHTML = `
-        <td>${order.orderID}</td>
-        <td>${order.orderDate}</td>
-        <td>${order.itemName}</td>
-        <td>${formattedPrice}</td>
-        <td>${order.qtyBought}</td>
-        <td>${formattedShipping}</td>
-        <td>${formattedTaxes}</td>
-        <td class="order-total">${formattedTotal}</td>
-        <td>
-            <div class="status ${statusMap[order.orderStatus]}"><span>${order.orderStatus}</span></div>
-        </td>
-        <td class="action">
-            <i title="Edit" onclick="editRow('${order.orderID}')" class="edit-icon fa-solid fa-pen-to-square"></i>
-            <i onclick="deleteOrder('${order.orderID}')" class="delete-icon fas fa-trash-alt"></i>
-          </td> 
-      `;
+      orderRow.appendChild(createCell(order.orderID));
+      orderRow.appendChild(createCell(order.orderDate));
+      orderRow.appendChild(createCell(order.itemName));
+      orderRow.appendChild(createCell(formattedPrice));
+      orderRow.appendChild(createCell(String(order.qtyBought)));
+      orderRow.appendChild(createCell(formattedShipping));
+      orderRow.appendChild(createCell(formattedTaxes));
+      orderRow.appendChild(createCell(formattedTotal, "order-total"));
+
+      const statusCell = document.createElement("td");
+      const statusWrapper = document.createElement("div");
+      const statusText = document.createElement("span");
+      const statusClass = statusMap[order.orderStatus] || "";
+
+      statusWrapper.className = statusClass ? `status ${statusClass}` : "status";
+      statusText.textContent = order.orderStatus;
+      statusWrapper.appendChild(statusText);
+      statusCell.appendChild(statusWrapper);
+      orderRow.appendChild(statusCell);
+
+      const actionCell = document.createElement("td");
+      actionCell.className = "action";
+
+      actionCell.appendChild(createActionIcon({
+        title: "Edit",
+        className: "edit-icon fa-solid fa-pen-to-square",
+        onClick: () => editRow(order.orderID),
+      }));
+
+      actionCell.appendChild(createActionIcon({
+        className: "delete-icon fas fa-trash-alt",
+        onClick: () => deleteOrder(order.orderID),
+      }));
+
+      orderRow.appendChild(actionCell);
       orderTableBody.appendChild(orderRow);
   });
   displayRevenue();

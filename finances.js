@@ -113,6 +113,30 @@ function newTransaction(event) {
     document.getElementById("transaction-form").reset();
 }
 
+function createCell(text, className = "") {
+    const cell = document.createElement("td");
+    cell.textContent = text;
+
+    if (className) {
+        cell.className = className;
+    }
+
+    return cell;
+}
+
+function createActionIcon({ title, className, onClick }) {
+    const icon = document.createElement("i");
+
+    if (title) {
+        icon.title = title;
+    }
+
+    icon.className = className;
+    icon.addEventListener("click", onClick);
+
+    return icon;
+}
+
 
 function renderTransactions(transactions) {
     const transactionTableBody = document.getElementById("tableBody");
@@ -132,17 +156,27 @@ function renderTransactions(transactions) {
 
         const formattedAmount = typeof transaction.trAmount === 'number' ? `$${transaction.trAmount.toFixed(2)}` : '';
 
-        transactionRow.innerHTML = `
-            <td>${transaction.trID}</td>
-            <td>${transaction.trDate}</td>
-            <td>${transaction.trCategory}</td>
-            <td class="tr-amount">${formattedAmount}</td>
-            <td>${transaction.trNotes}</td>
-            <td class="action">
-                <i title="Edit" onclick="editRow('${transaction.trID}')" class="edit-icon fa-solid fa-pen-to-square"></i>
-                <i onclick="deleteTransaction('${transaction.trID}')" class="delete-icon fas fa-trash-alt"></i>
-            </td> 
-        `;
+        transactionRow.appendChild(createCell(String(transaction.trID)));
+        transactionRow.appendChild(createCell(transaction.trDate));
+        transactionRow.appendChild(createCell(transaction.trCategory));
+        transactionRow.appendChild(createCell(formattedAmount, "tr-amount"));
+        transactionRow.appendChild(createCell(transaction.trNotes));
+
+        const actionCell = document.createElement("td");
+        actionCell.className = "action";
+
+        actionCell.appendChild(createActionIcon({
+            title: "Edit",
+            className: "edit-icon fa-solid fa-pen-to-square",
+            onClick: () => editRow(transaction.trID),
+        }));
+
+        actionCell.appendChild(createActionIcon({
+            className: "delete-icon fas fa-trash-alt",
+            onClick: () => deleteTransaction(transaction.trID),
+        }));
+
+        transactionRow.appendChild(actionCell);
         transactionTableBody.appendChild(transactionRow);
   });
   displayExpenses();
