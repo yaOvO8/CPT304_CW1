@@ -19,7 +19,9 @@
                 <i class="fas fa-b"></i>
                 <span>BizTrack</span>
             </a>
-            <i class="fa-solid fa-xmark" title="Close" onclick="closeSidebar()"></i>
+            <button type="button" class="icon-button sidebar-close" aria-label="Close sidebar" onclick="closeSidebar()">
+                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
         </div>
         <ul class="menu">
             <li>
@@ -63,15 +65,16 @@
 
     <div class="main-content">
         <div class="header-wrapper">
-            <div class="menu-icon" onclick="openSidebar()">
-                <i class="fa-solid fa-bars"></i>
-            </div>
+            <button type="button" class="menu-icon icon-button" aria-label="Open sidebar" onclick="openSidebar()">
+                <i class="fa-solid fa-bars" aria-hidden="true"></i>
+            </button>
             <div class="header-title">
                 <!-- <span>Primary</span> -->
                 <h2>Orders</h2>
             </div>
-            <div class="user-info">
+                <div class="user-info">
                 <div class="search-box">
+                    <label class="sr-only" for="searchInput">Search orders</label>
                     <i class="fas fa-search"></i>
                     <input type="search" id="searchInput" placeholder="Search">
                 </div>
@@ -171,15 +174,33 @@
                 <table id="order-table">
                     <thead>
                         <tr>
-                            <th onclick="sortTable('orderID')">Order ID</th>
-                            <th onclick="sortTable('orderDate')">Order Date</th>
-                            <th onclick="sortTable('itemName')">Item Name</th>
-                            <th onclick="sortTable('itemPrice')">Item Price</th>
-                            <th onclick="sortTable('qtyBought')">Qty</th>
-                            <th onclick="sortTable('shipping')">Shipping Fee</th>
-                            <th onclick="sortTable('taxes')">Taxes</th>
-                            <th onclick="sortTable('orderTotal')">Order Total</th>
-                            <th onclick="sortTable('orderStatus')">Order Status</th>
+                            <th scope="col">
+                                <button type="button" class="sort-button" aria-label="Sort by order ID" onclick="sortTable('orderID', this)">Order ID</button>
+                            </th>
+                            <th scope="col">
+                                <button type="button" class="sort-button" aria-label="Sort by order date" onclick="sortTable('orderDate', this)">Order Date</button>
+                            </th>
+                            <th scope="col">
+                                <button type="button" class="sort-button" aria-label="Sort by item name" onclick="sortTable('itemName', this)">Item Name</button>
+                            </th>
+                            <th scope="col">
+                                <button type="button" class="sort-button" aria-label="Sort by item price" onclick="sortTable('itemPrice', this)">Item Price</button>
+                            </th>
+                            <th scope="col">
+                                <button type="button" class="sort-button" aria-label="Sort by quantity" onclick="sortTable('qtyBought', this)">Qty</button>
+                            </th>
+                            <th scope="col">
+                                <button type="button" class="sort-button" aria-label="Sort by shipping fee" onclick="sortTable('shipping', this)">Shipping Fee</button>
+                            </th>
+                            <th scope="col">
+                                <button type="button" class="sort-button" aria-label="Sort by taxes" onclick="sortTable('taxes', this)">Taxes</button>
+                            </th>
+                            <th scope="col">
+                                <button type="button" class="sort-button" aria-label="Sort by order total" onclick="sortTable('orderTotal', this)">Order Total</button>
+                            </th>
+                            <th scope="col">
+                                <button type="button" class="sort-button" aria-label="Sort by order status" onclick="sortTable('orderStatus', this)">Order Status</button>
+                            </th>
                             <th>Action</th>
                         </tr>
                     </thead>
