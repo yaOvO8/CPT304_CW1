@@ -124,17 +124,19 @@ function createCell(text, className = "") {
     return cell;
 }
 
-function createActionIcon({ title, className, onClick }) {
+function createActionIcon({ label, iconClassName, onClick }) {
+    const button = document.createElement("button");
     const icon = document.createElement("i");
 
-    if (title) {
-        icon.title = title;
-    }
+    button.type = "button";
+    button.setAttribute("aria-label", label);
+    button.addEventListener("click", onClick);
 
-    icon.className = className;
-    icon.addEventListener("click", onClick);
+    icon.className = iconClassName;
+    icon.setAttribute("aria-hidden", "true");
+    button.appendChild(icon);
 
-    return icon;
+    return button;
 }
 
 
@@ -166,13 +168,14 @@ function renderTransactions(transactions) {
         actionCell.className = "action";
 
         actionCell.appendChild(createActionIcon({
-            title: "Edit",
-            className: "edit-icon fa-solid fa-pen-to-square",
+            label: `Edit expense ${transaction.trID}`,
+            iconClassName: "edit-icon fa-solid fa-pen-to-square",
             onClick: () => editRow(transaction.trID),
         }));
 
         actionCell.appendChild(createActionIcon({
-            className: "delete-icon fas fa-trash-alt",
+            label: `Delete expense ${transaction.trID}`,
+            iconClassName: "delete-icon fas fa-trash-alt",
             onClick: () => deleteTransaction(transaction.trID),
         }));
 
@@ -242,9 +245,12 @@ function deleteTransaction(trID) {
     }
 }
 
-function sortTable(column) {
+function sortTable(column, button) {
     const tbody = document.getElementById("tableBody");
     const rows = Array.from(tbody.querySelectorAll("tr"));
+    const headers = document.querySelectorAll("#finance-table thead th");
+    const headerCell = button.closest("th");
+    const isAscending = headerCell.getAttribute("aria-sort") !== "ascending";
 
     const isNumeric = column === "trID" || column === "trAmount";
 
@@ -253,12 +259,16 @@ function sortTable(column) {
         const bValue = isNumeric ? parseFloat(b.dataset[column]) : b.dataset[column];
 
         if (typeof aValue === "string" && typeof bValue === "string") {
-            // Case-insensitive string comparison for text columns
-            return aValue.localeCompare(bValue, undefined, { sensitivity: "base" });
+            return isAscending
+                ? aValue.localeCompare(bValue, undefined, { sensitivity: "base" })
+                : bValue.localeCompare(aValue, undefined, { sensitivity: "base" });
         } else {
-            return aValue - bValue;
+            return isAscending ? aValue - bValue : bValue - aValue;
         }
     });
+
+    headers.forEach(header => header.removeAttribute("aria-sort"));
+    headerCell.setAttribute("aria-sort", isAscending ? "ascending" : "descending");
 
     rows.forEach(row => tbody.removeChild(row));
 
