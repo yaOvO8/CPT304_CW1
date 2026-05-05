@@ -1,4 +1,3 @@
-
 function openSidebar() {
     var side = document.getElementById('sidebar');
     side.style.display = (side.style.display === "block") ? "none" : "block";
@@ -8,19 +7,19 @@ function closeSidebar() {
     document.getElementById('sidebar').style.display = 'none';
 }
 
-
 function openForm() {
     var form = document.getElementById("transaction-form")
     form.style.display = (form.style.display === "block") ? "none" : "block";
+    document.getElementById("transaction-form").reset();
+    document.getElementById("tr-id").value = "";
+    document.getElementById("submitBtn").textContent = "Add";
 }
 
 function closeForm() {
     document.getElementById("transaction-form").style.display = "none";
 }
 
-
 let transactions = [];
-let serialNumberCounter;
 
 window.onload = function () {
     const storedTransactions = localStorage.getItem("bizTrackTransactions");
@@ -64,87 +63,62 @@ window.onload = function () {
                 trNotes: "Pizza"
             },
         ];
-
-        serialNumberCounter = transactions.length + 1
-  
         localStorage.setItem("bizTrackTransactions", JSON.stringify(transactions));
     }
-  
     renderTransactions(transactions);
 }
 
 function addOrUpdate(event) {
+    event.preventDefault();
     let type = document.getElementById("submitBtn").textContent;
     if (type === 'Add') {
-        newTransaction(event);
+        newTransaction();
     } else if (type === 'Update'){
         const trId = document.getElementById("tr-id").value;
-        updateTransaction(+trId); // convert to number
+        updateTransaction(+trId);
     }
 }
 
+// ========== 修复1：正确的ID生成逻辑（永远不会重复）==========
+function getNextTransactionID() {
+    if (transactions.length === 0) {
+        return 1;
+    }
+    const highestID = Math.max(...transactions.map(transaction => Number(transaction.trID) || 0));
+    return highestID + 1;
+}
 
-function newTransaction(event) {
-    event.preventDefault();
+function newTransaction() {
     const trDate = document.getElementById("tr-date").value;
     const trCategory = document.getElementById("tr-category").value;
     const trAmount = parseFloat(document.getElementById("tr-amount").value);
     const trNotes = document.getElementById("tr-notes").value;
 
-    serialNumberCounter = transactions.length + 1;
-    let trID = serialNumberCounter;
+    // 使用修复后的ID生成逻辑
+    const trID = getNextTransactionID();
     
     const transaction = {
-      trID,
-      trDate,
-      trCategory,
-      trAmount,
-      trNotes,
+        trID,
+        trDate,
+        trCategory,
+        trAmount,
+        trNotes,
     };
     
     transactions.push(transaction);
-  
     renderTransactions(transactions);
     localStorage.setItem("bizTrackTransactions", JSON.stringify(transactions));
-
-    serialNumberCounter++;
     displayExpenses();
-  
     document.getElementById("transaction-form").reset();
+    closeForm();
 }
 
-function createCell(text, className = "") {
-    const cell = document.createElement("td");
-    cell.textContent = text;
-
-    if (className) {
-        cell.className = className;
-    }
-
-    return cell;
-}
-
-function createActionIcon({ title, className, onClick }) {
-    const icon = document.createElement("i");
-
-    if (title) {
-        icon.title = title;
-    }
-
-    icon.className = className;
-    icon.addEventListener("click", onClick);
-
-    return icon;
-}
-
-
+// ========== 修复2：S/N列显示连续序号（用index+1，不直接显示trID）==========
 function renderTransactions(transactions) {
     const transactionTableBody = document.getElementById("tableBody");
     transactionTableBody.innerHTML = "";
 
-    const transactionToRender = transactions;
-
-    transactionToRender.forEach(transaction => {
+    transactions.forEach((transaction, index) => {
         const transactionRow = document.createElement("tr");
         transactionRow.className = "transaction-row";
 
@@ -156,41 +130,27 @@ function renderTransactions(transactions) {
 
         const formattedAmount = typeof transaction.trAmount === 'number' ? `$${transaction.trAmount.toFixed(2)}` : '';
 
-        transactionRow.appendChild(createCell(String(transaction.trID)));
-        transactionRow.appendChild(createCell(transaction.trDate));
-        transactionRow.appendChild(createCell(transaction.trCategory));
-        transactionRow.appendChild(createCell(formattedAmount, "tr-amount"));
-        transactionRow.appendChild(createCell(transaction.trNotes));
-
-        const actionCell = document.createElement("td");
-        actionCell.className = "action";
-
-        actionCell.appendChild(createActionIcon({
-            title: "Edit",
-            className: "edit-icon fa-solid fa-pen-to-square",
-            onClick: () => editRow(transaction.trID),
-        }));
-
-        actionCell.appendChild(createActionIcon({
-            className: "delete-icon fas fa-trash-alt",
-            onClick: () => deleteTransaction(transaction.trID),
-        }));
-
-        transactionRow.appendChild(actionCell);
+        // 关键修改：S/N列显示 index+1（连续序号），而不是 transaction.trID
+        transactionRow.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${transaction.trDate}</td>
+            <td>${transaction.trCategory}</td>
+            <td class="tr-amount">${formattedAmount}</td>
+            <td>${transaction.trNotes}</td>
+            <td class="action">
+                <i title="Edit" onclick="editRow(${transaction.trID})" class="edit-icon fa-solid fa-pen-to-square"></i>
+                <i onclick="deleteTransaction(${transaction.trID})" class="delete-icon fas fa-trash-alt"></i>
+            </td>
+        `;
         transactionTableBody.appendChild(transactionRow);
-  });
-  displayExpenses();
+    });
+    displayExpenses();
 }
 
 function displayExpenses() {
     const resultElement = document.getElementById("total-expenses");
-
-    const totalExpenses = transactions
-        .reduce((total, transaction) => total + transaction.trAmount,0);
-
-    resultElement.innerHTML = `
-        <span>Total Expenses: $${totalExpenses.toFixed(2)}</span>
-    `;
+    const totalExpenses = transactions.reduce((total, transaction) => total + transaction.trAmount, 0);
+    resultElement.innerHTML = `<span>Total Expenses: $${totalExpenses.toFixed(2)}</span>`;
 }
 
 function editRow(trID) {
@@ -203,23 +163,20 @@ function editRow(trID) {
     document.getElementById("tr-notes").value = trToEdit.trNotes;
   
     document.getElementById("submitBtn").textContent = "Update";
-
     document.getElementById("transaction-form").style.display = "block";
-  }
+}
   
 function deleteTransaction(trID) {
     const indexToDelete = transactions.findIndex(transaction => transaction.trID == trID);
 
     if (indexToDelete !== -1) {
         transactions.splice(indexToDelete, 1);
-
         localStorage.setItem("bizTrackTransactions", JSON.stringify(transactions));
-
         renderTransactions(transactions);
     }
 }
 
-  function updateTransaction(trID) {
+function updateTransaction(trID) {
     const indexToUpdate = transactions.findIndex(transaction => transaction.trID === trID);
 
     if (indexToUpdate !== -1) {
@@ -232,13 +189,11 @@ function deleteTransaction(trID) {
         };
 
         transactions[indexToUpdate] = updatedTransaction;
-
         localStorage.setItem("bizTrackTransactions", JSON.stringify(transactions));
-
         renderTransactions(transactions);
-
         document.getElementById("transaction-form").reset();
         document.getElementById("submitBtn").textContent = "Add";
+        closeForm();
     }
 }
 
@@ -249,11 +204,18 @@ function sortTable(column) {
     const isNumeric = column === "trID" || column === "trAmount";
 
     const sortedRows = rows.sort((a, b) => {
-        const aValue = isNumeric ? parseFloat(a.dataset[column]) : a.dataset[column];
-        const bValue = isNumeric ? parseFloat(b.dataset[column]) : b.dataset[column];
+        let aValue, bValue;
+        
+        if (column === "trID") {
+            // 排序时用真实的 trID，而不是显示的序号
+            aValue = parseInt(a.dataset.trID);
+            bValue = parseInt(b.dataset.trID);
+        } else {
+            aValue = isNumeric ? parseFloat(a.dataset[column]) : a.dataset[column];
+            bValue = isNumeric ? parseFloat(b.dataset[column]) : b.dataset[column];
+        }
 
         if (typeof aValue === "string" && typeof bValue === "string") {
-            // Case-insensitive string comparison for text columns
             return aValue.localeCompare(bValue, undefined, { sensitivity: "base" });
         } else {
             return aValue - bValue;
@@ -261,7 +223,6 @@ function sortTable(column) {
     });
 
     rows.forEach(row => tbody.removeChild(row));
-
     sortedRows.forEach(row => tbody.appendChild(row));
 }
 
@@ -270,7 +231,6 @@ document.getElementById("searchInput").addEventListener("keyup", function(event)
         performSearch();
     }
 });
-
 
 function performSearch() {
     const searchInput = document.getElementById("searchInput").value.toLowerCase();
@@ -281,7 +241,6 @@ function performSearch() {
         row.style.display = visible ? "table-row" : "none";
     });
 }
-
 
 function exportToCSV() {
     const transactionsToExport = transactions.map(transaction => {
@@ -295,22 +254,17 @@ function exportToCSV() {
     });
   
     const csvContent = generateCSV(transactionsToExport);
-  
     const blob = new Blob([csvContent], { type: 'text/csv' });
-  
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
     link.download = 'biztrack_expense_table.csv';
-  
     document.body.appendChild(link);
     link.click();
-  
     document.body.removeChild(link);
 }
   
 function generateCSV(data) {
     const headers = Object.keys(data[0]).join(',');
     const rows = data.map(order => Object.values(order).join(','));
-
     return `${headers}\n${rows.join('\n')}`;
 }
