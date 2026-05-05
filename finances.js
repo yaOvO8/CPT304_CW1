@@ -1,4 +1,3 @@
-
 function openSidebar() {
     var side = document.getElementById('sidebar');
     side.style.display = (side.style.display === "block") ? "none" : "block";
@@ -20,7 +19,6 @@ function closeForm() {
 
 
 let transactions = [];
-let serialNumberCounter;
 
 window.onload = function () {
     const storedTransactions = localStorage.getItem("bizTrackTransactions");
@@ -65,7 +63,6 @@ window.onload = function () {
             },
         ];
 
-        serialNumberCounter = transactions.length + 1
   
         localStorage.setItem("bizTrackTransactions", JSON.stringify(transactions));
     }
@@ -83,6 +80,14 @@ function addOrUpdate(event) {
     }
 }
 
+function getNextTransactionID() {
+    if (transactions.length === 0) {
+        return 1;
+    }
+    const highestID = Math.max(...transactions.map(transaction => Number(transaction.trID) || 0));
+    return highestID + 1;
+}
+
 
 function newTransaction(event) {
     event.preventDefault();
@@ -91,26 +96,22 @@ function newTransaction(event) {
     const trAmount = parseFloat(document.getElementById("tr-amount").value);
     const trNotes = document.getElementById("tr-notes").value;
 
-    serialNumberCounter = transactions.length + 1;
-    let trID = serialNumberCounter;
+    const trID = getNextTransactionID();
     
     const transaction = {
-      trID,
-      trDate,
-      trCategory,
-      trAmount,
-      trNotes,
+        trID,
+        trDate,
+        trCategory,
+        trAmount,
+        trNotes,
     };
     
     transactions.push(transaction);
-  
     renderTransactions(transactions);
     localStorage.setItem("bizTrackTransactions", JSON.stringify(transactions));
-
-    serialNumberCounter++;
     displayExpenses();
-  
     document.getElementById("transaction-form").reset();
+    closeForm();
 }
 
 function createCell(text, className = "") {
@@ -146,7 +147,7 @@ function renderTransactions(transactions) {
 
     const transactionToRender = transactions;
 
-    transactionToRender.forEach(transaction => {
+    transactionToRender.forEach((transaction, index) => {
         const transactionRow = document.createElement("tr");
         transactionRow.className = "transaction-row";
 
@@ -158,7 +159,7 @@ function renderTransactions(transactions) {
 
         const formattedAmount = typeof transaction.trAmount === 'number' ? `$${transaction.trAmount.toFixed(2)}` : '';
 
-        transactionRow.appendChild(createCell(String(transaction.trID)));
+        transactionRow.appendChild(createCell(String(index + 1)));
         transactionRow.appendChild(createCell(transaction.trDate));
         transactionRow.appendChild(createCell(transaction.trCategory));
         transactionRow.appendChild(createCell(formattedAmount, "tr-amount"));
