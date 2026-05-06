@@ -90,6 +90,7 @@
                     <button class="download-button" onclick="exportToCSV()">Download CSV</button>
                 </div>
             </div>
+            <div id="action-feedback" class="page-feedback" role="status" aria-live="polite" aria-atomic="true"></div>
             <div class="form-popup">
                 <form class="form-container" id="product-form" onsubmit="addOrUpdate(event)">
                     <div class="form-columns">
@@ -194,6 +195,7 @@
     </div>
     </div>
 
+    <script src="./feedback.js"></script>
     <script src="./products.js"></script>
 </body>
 </html>
