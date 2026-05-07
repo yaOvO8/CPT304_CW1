@@ -217,6 +217,93 @@ body {
     color: #8b1e1e;
     border: 1px solid #f3bcbc;
 }
+.site-footer {
+    background: #ffffff;
+    color: var(--black-color);
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.site-footer p {
+    padding: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+.site-footer__links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.site-footer__links a,
+.footer-link-button {
+    color: var(--blue-color);
+    text-decoration: none;
+    font-weight: 700;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+}
+.site-footer__links a:hover,
+.footer-link-button:hover {
+    color: var(--brown-color);
+}
+.cookie-banner {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 1000;
+    width: min(460px, calc(100vw - 2rem));
+    background: #fff;
+    color: var(--black-color);
+    border-left: 6px solid var(--blue-color);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    padding: 1.25rem;
+}
+.cookie-banner[hidden] {
+    display: none;
+}
+.cookie-banner__content h2 {
+    font-size: 1.05rem;
+    margin-bottom: 0.6rem;
+}
+.cookie-banner__content p {
+    padding: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+.cookie-banner__content a {
+    color: var(--blue-color);
+    font-weight: 700;
+}
+.cookie-banner__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+.cookie-banner__actions .download-button,
+.cookie-banner__actions .cookie-banner__secondary {
+    min-width: 130px;
+}
+.cookie-banner__secondary {
+    background: var(--orange-color);
+    color: var(--white-color);
+    padding: 12px 13px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: medium;
+    font-weight: 600;
+}
+.cookie-banner__secondary:hover {
+    background: #b86e51;
+}
 
 .card-container {
     background: #ffffff;
@@ -605,10 +692,15 @@ textarea:focus-visible {
     border-radius: 10px;
     margin-bottom: 1rem;
 }
+.privacy-container {
+    margin-bottom: 1rem;
+}
+.privacy-container a,
 .about-container a {
     text-decoration: none;
     color: var(--blue-color);
 }
+.privacy-container a:hover,
 .about-container a:hover {
     color: var(--brown-color);
 }
@@ -696,6 +788,16 @@ ol {
         margin-left: 0;
         position: inherit;
     }
+
+    .cookie-banner {
+        right: 0.75rem;
+        bottom: 0.75rem;
+        width: calc(100vw - 1.5rem);
+    }
+
+    .site-footer {
+        align-items: flex-start;
+    }
 }
 
 
@@ -740,5 +842,3 @@ ol {
       display: none;
     }
 } */
-
-
