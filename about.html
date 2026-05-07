@@ -54,6 +54,12 @@
                     <span>Help</span>
                 </a>
             </li>
+            <li>
+                <a href="./privacy.html">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Privacy Policy</span>
+                </a>
+            </li>
             <li class="logout active">
                 <a href="./about.html">
                     <i class="fa-solid fa-users-line"></i>
@@ -95,17 +101,17 @@
 
                     <ul class="contact-icon">
                         <li>
-                            <a href="https://www.linkedin.com/in/sumayyahmusa/" target=”_blank”
+                            <a href="https://www.linkedin.com/in/sumayyahmusa/" target="_blank" rel="noopener noreferrer">
                                 <i class="fa-brands fa-linkedin"></i>
                             </a> 
                         </li>
                         <li>
-                            <a href="https://github.com/sumusa/"target=”_blank”
+                            <a href="https://github.com/sumusa/" target="_blank" rel="noopener noreferrer">
                                 <i class="fa-brands fa-square-github"></i>
                             </a> 
                         </li>
                         <li>
-                            <a href="mailto:info@summeesarts.com" target=”_blank”
+                            <a href="mailto:info@summeesarts.com">
                                 <i class="fa-solid fa-envelope"></i>
                             </a> 
                         </li>
@@ -116,5 +122,15 @@
             </section>
         </div>
     </div>
+
+    <footer class="site-footer">
+        <p>BizTrack keeps data in your browser only.</p>
+        <div class="site-footer__links">
+            <a href="./privacy.html">Privacy Policy</a>
+            <button type="button" class="footer-link-button" onclick="resetCookieConsent()">Cookie settings</button>
+        </div>
+    </footer>
+
     <script src="./help.js"></script>
+    <script src="./cookie-banner.js"></script>
 </body>

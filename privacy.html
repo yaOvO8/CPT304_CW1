@@ -7,10 +7,10 @@
     <meta property="og:description" content="A project born out of real small business challenges, now simplifying product, order, and finance management."/>
     <meta property="og:image:secure_url" content="https://i.imgur.com/0O47fVi.jpg"/>
     <meta property="og:url" content="https://sumusa.github.io/biztrack/"/>
-    <link rel="stylesheet" href="styles.css"/>
+    <link rel="stylesheet" href="./styles.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
     <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
-    <title>Dashboard - BizTrack</title>
+    <title>Privacy Policy - BizTrack</title>
 </head>
 <body>
     <div id="sidebar" class="sidebar">
@@ -24,7 +24,7 @@
             </button>
         </div>
         <ul class="menu">
-            <li class="active">
+            <li>
                 <a href="./index.html">
                     <i class="fa-solid fa-gauge-high"></i>
                     <span>Dashboard</span>
@@ -54,7 +54,7 @@
                     <span>Help</span>
                 </a>
             </li>
-            <li>
+            <li class="active">
                 <a href="./privacy.html">
                     <i class="fa-solid fa-shield-halved"></i>
                     <span>Privacy Policy</span>
@@ -75,72 +75,49 @@
                 <i class="fa-solid fa-bars" aria-hidden="true"></i>
             </button>
             <div class="header-title">
-                <!-- <span>Primary</span> -->
-                <h2>Dashboard</h2>
+                <h2>Privacy Policy</h2>
             </div>
             <div class="user-info">
-                <!-- <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="search" id="searchInput" placeholder="Search">
-                </div> -->
-                <!-- <i class="fas fa-user-alt fa-xl"></i> -->
             </div>
         </div>
 
-        <div class="card-container">
-            <h3 class="main-title">Summary</h3>
-            <div class="card-wrapper">
-                <a href="./orders.html">
-                    <div class="payment-card">
-                        <div class="card-header">
-                            <div class="amount" id="rev-amount">
-                            </div>
-                            <i class="fas fa-sack-dollar icon"></i>
-                        </div>
-                        <span class="card-detail">**** **** **** 5674</span>
-                    </div>
-                </a>
-                <a href="./finances.html">    
-                    <div class="payment-card">
-                        <div class="card-header">
-                            <div class="amount" id="exp-amount"></div>
-                            <i class="fas fa-credit-card icon"></i>
-                        </div>
-                        <span class="card-detail">**** **** **** 2356</span>
-                    </div>
-                </a>
-                <a href="./orders.html"> 
-                    <div class="payment-card">
-                        <div class="card-header">
-                            <div class="amount" id="num-orders"></div>
-                            <i class="fas fa-shopping-cart icon"></i>
-                        </div>
-                        <span class="card-detail">**** **** **** 1047</span>
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="payment-card">
-                        <div class="card-header">
-                            <div class="amount" id="balance"></div>
-                            <i class="fas fa-arrow-up-right-dots icon"></i>
-                        </div>
-                        <span class="card-detail">**** **** **** 2951</span>
-                    </div>
-                </a> 
-            </div>
-        </div>
-        <div class="charts-container">
-            <h3 class="main-title">Analytics</h3>
-            <div class="charts-wrapper">
-                <div class="charts-card">
-                    <span class="chart-title">Sales by Product Category</span>
-                    <div id="bar-chart"></div>
-                </div>
-                <div class="charts-card">
-                    <span class="chart-title">Expenses</span>
-                    <div id="donut-chart"></div>
-                </div>
-            </div>
+        <div class="guide-container privacy-container">
+            <section>
+                <article>
+                    <h3 class="main-title">Overview</h3>
+                    <p>BizTrack is a front-end business tracking project. This site does not require a user account and does not send your product, order, or expense records to a back-end server.</p>
+                </article>
+                <article>
+                    <h3 class="main-title">What We Store</h3>
+                    <p>BizTrack stores data in your browser using local storage so the app can remember your records and preferences between visits.</p>
+                    <ol>
+                        <li>Products you add or edit.</li>
+                        <li>Orders you add or edit.</li>
+                        <li>Expenses you add or edit.</li>
+                        <li>Your cookie banner preference.</li>
+                    </ol>
+                </article>
+                <article>
+                    <h3 class="main-title">Why We Store It</h3>
+                    <p>The stored data is used only to keep the app functional on your device, including table contents, dashboard totals, charts, and the cookie banner choice.</p>
+                </article>
+                <article>
+                    <h3 class="main-title">Cookie Banner</h3>
+                    <p>The banner on this site lets you accept or dismiss the notice. You can change that choice at any time from the footer link on any page.</p>
+                </article>
+                <article>
+                    <h3 class="main-title">Third-Party Resources</h3>
+                    <p>BizTrack loads third-party front-end resources such as Font Awesome, Google Fonts, and ApexCharts CDNs. These services may receive standard browser requests when the page loads.</p>
+                </article>
+                <article>
+                    <h3 class="main-title">Your Control</h3>
+                    <p>You can clear BizTrack data at any time by clearing your browser storage for this site. Doing that removes saved records and resets the cookie banner preference.</p>
+                </article>
+                <article>
+                    <h3 class="main-title">Contact</h3>
+                    <p>If you want more context about the project, use the <a href="./about.html">Meet the Developer</a> page or the <a href="./help.html">Help</a> page.</p>
+                </article>
+            </section>
         </div>
     </div>
 
@@ -152,10 +129,7 @@
         </div>
     </footer>
 
-    <!-- Apex Charts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.45.2/apexcharts.min.js"></script>
-    <script src="./script.js"></script>
+    <script src="./help.js"></script>
     <script src="./cookie-banner.js"></script>
-    <script>initializeChart()</script>
 </body>
 </html>
