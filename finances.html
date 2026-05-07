@@ -90,6 +90,7 @@
                     <button class="download-button" onclick="exportToCSV()">Export to CSV</button>
                 </div>
             </div>
+            <div id="action-feedback" class="page-feedback" role="status" aria-live="polite" aria-atomic="true"></div>
 
             <div class="form-popup">
                 <form class="form-container" id="transaction-form" onsubmit="addOrUpdate(event)">
@@ -159,6 +160,7 @@
     </div>
     </div>
 
+    <script src="./feedback.js"></script>
     <script src="./finances.js"></script>
 </body>
 </html>

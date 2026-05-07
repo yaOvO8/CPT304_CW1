@@ -194,6 +194,29 @@ body {
     white-space: nowrap;
     border: 0;
 }
+.page-feedback {
+    min-height: 0;
+    margin: 0 0 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.4;
+    transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+.page-feedback.is-success,
+.page-feedback.is-error {
+    padding: 0.85rem 1rem;
+}
+.page-feedback.is-success {
+    background: #e7f7f1;
+    color: #145440;
+    border: 1px solid #bfe9d9;
+}
+.page-feedback.is-error {
+    background: #fdecec;
+    color: #8b1e1e;
+    border: 1px solid #f3bcbc;
+}
 
 .card-container {
     background: #ffffff;

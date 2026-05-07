@@ -71,6 +71,7 @@ window.onload = function () {
 }
 
 function addOrUpdate(event) {
+    event.preventDefault();
     let type = document.getElementById("submitBtn").textContent;
     if (type === 'Add') {
         newTransaction(event);
@@ -109,6 +110,7 @@ function newTransaction(event) {
     transactions.push(transaction);
     renderTransactions(transactions);
     localStorage.setItem("bizTrackTransactions", JSON.stringify(transactions));
+    showStatusMessage(`Expense ${trID} added successfully.`);
     displayExpenses();
     document.getElementById("transaction-form").reset();
     closeForm();
@@ -209,6 +211,7 @@ function editRow(trID) {
     document.getElementById("submitBtn").textContent = "Update";
 
     document.getElementById("transaction-form").style.display = "block";
+    clearStatusMessage();
   }
   
 function deleteTransaction(trID) {
@@ -220,6 +223,7 @@ function deleteTransaction(trID) {
         localStorage.setItem("bizTrackTransactions", JSON.stringify(transactions));
 
         renderTransactions(transactions);
+        showStatusMessage(`Expense ${trID} deleted successfully.`);
     }
 }
 
@@ -240,9 +244,11 @@ function deleteTransaction(trID) {
         localStorage.setItem("bizTrackTransactions", JSON.stringify(transactions));
 
         renderTransactions(transactions);
+        showStatusMessage(`Expense ${updatedTransaction.trID} updated successfully.`);
 
         document.getElementById("transaction-form").reset();
         document.getElementById("submitBtn").textContent = "Add";
+        closeForm();
     }
 }
 

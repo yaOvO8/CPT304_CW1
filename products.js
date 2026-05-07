@@ -76,6 +76,7 @@ function init() {
 }
 
 function addOrUpdate(event) {
+  event.preventDefault();
   let type = document.getElementById("submitBtn").textContent;
   if (type === 'Add') {
       newProduct(event);
@@ -95,7 +96,7 @@ function newProduct(event) {
   const prodSold = parseInt(document.getElementById("product-sold").value);
 
   if (isDuplicateID(prodID, null)) {
-    alert("Product ID already exists. Please use a unique ID.");
+    showStatusMessage("Product ID already exists. Please use a unique ID.", "error");
     return;
   }
 
@@ -112,8 +113,9 @@ function newProduct(event) {
 
   renderProducts(products);
   localStorage.setItem("bizTrackProducts", JSON.stringify(products));
-
+  showStatusMessage(`Product ${prodID} added successfully.`);
   document.getElementById("product-form").reset();
+  closeForm();
 }
 
 function createCell(text, className = "") {
@@ -199,6 +201,7 @@ function editRow(prodID) {
   document.getElementById("submitBtn").textContent = "Update";
 
   document.getElementById("product-form").style.display = "block";
+  clearStatusMessage();
 }
 
 function deleteProduct(prodID) {
@@ -210,6 +213,7 @@ function deleteProduct(prodID) {
       localStorage.setItem("bizTrackProducts", JSON.stringify(products));
 
       renderProducts(products);
+      showStatusMessage(`Product ${prodID} deleted successfully.`);
   }
 }
 
@@ -227,7 +231,7 @@ function updateProduct(prodID) {
         };
 
         if (isDuplicateID(updatedProduct.prodID, prodID)) {
-            alert("Product ID already exists. Please use a unique ID.");
+            showStatusMessage("Product ID already exists. Please use a unique ID.", "error");
             return;
         }
 
@@ -236,9 +240,11 @@ function updateProduct(prodID) {
         localStorage.setItem("bizTrackProducts", JSON.stringify(products));
 
         renderProducts(products);
+        showStatusMessage(`Product ${updatedProduct.prodID} updated successfully.`);
 
         document.getElementById("product-form").reset();
         document.getElementById("submitBtn").textContent = "Add";
+        closeForm();
     }
 }
 

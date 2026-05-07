@@ -90,6 +90,7 @@ window.onload = function () {
 }
 
 function addOrUpdate(event) {
+    event.preventDefault();
     let type = document.getElementById("submitBtn").textContent;
     if (type === 'Add') {
         newOrder(event);
@@ -113,7 +114,7 @@ function newOrder(event) {
   const orderStatus = document.getElementById("order-status").value;
 
   if (isDuplicateID(orderID, null)) {
-    alert("Order ID already exists. Please use a unique ID.");
+    showStatusMessage("Order ID already exists. Please use a unique ID.", "error");
     return;
   }
 
@@ -133,8 +134,9 @@ function newOrder(event) {
 
   renderOrders(orders);
   localStorage.setItem("bizTrackOrders", JSON.stringify(orders));
-
+  showStatusMessage(`Order ${orderID} added successfully.`);
   document.getElementById("order-form").reset();
+  closeForm();
 }
 
 function createCell(text, className = "") {
@@ -263,6 +265,7 @@ function editRow(orderID) {
     document.getElementById("submitBtn").textContent = "Update";
 
     document.getElementById("order-form").style.display = "block";
+    clearStatusMessage();
 }
 
 function deleteOrder(orderID) {
@@ -274,6 +277,7 @@ function deleteOrder(orderID) {
       localStorage.setItem("bizTrackOrders", JSON.stringify(orders));
 
       renderOrders(orders);
+      showStatusMessage(`Order ${orderID} deleted successfully.`);
   }
 }
 
@@ -298,7 +302,7 @@ function updateOrder(orderID) {
         };
 
         if (isDuplicateID(updatedOrder.orderID, orderID)) {
-            alert("Order ID already exists. Please use a unique ID.");
+            showStatusMessage("Order ID already exists. Please use a unique ID.", "error");
             return;
         }
 
@@ -307,9 +311,11 @@ function updateOrder(orderID) {
         localStorage.setItem("bizTrackOrders", JSON.stringify(orders));
 
         renderOrders(orders);
+        showStatusMessage(`Order ${updatedOrder.orderID} updated successfully.`);
 
         document.getElementById("order-form").reset();
         document.getElementById("submitBtn").textContent = "Add";
+        closeForm();
     }
 }
 
