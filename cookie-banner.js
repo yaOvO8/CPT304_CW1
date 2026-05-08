@@ -40,19 +40,16 @@ function createCookieBanner() {
   banner.className = "cookie-banner";
   banner.setAttribute("role", "region");
   banner.setAttribute("aria-live", "polite");
-  banner.setAttribute("aria-label", "Cookie notice");
+  banner.setAttribute("aria-label", window.t ? t("cookie.ariaLabel") : "Cookie notice");
 
   banner.innerHTML = `
     <div class="cookie-banner__content">
-      <h2 id="cookie-banner-title">We use browser storage to keep BizTrack working.</h2>
-      <p>
-        BizTrack stores your products, orders, expenses, and this choice in your browser.
-        Read our <a href="./privacy.html">Privacy Policy</a> for details.
-      </p>
+      <h2 id="cookie-banner-title">${window.t ? t("cookie.title") : "We use browser storage to keep BizTrack working."}</h2>
+      <p>${window.t ? t("cookie.body") : 'BizTrack stores your products, orders, expenses, and this choice in your browser. Read our <a href="./privacy.html">Privacy Policy</a> for details.'}</p>
     </div>
     <div class="cookie-banner__actions">
-      <button type="button" class="download-button" id="accept-cookies-btn">Accept</button>
-      <button type="button" class="btn cookie-banner__secondary" id="dismiss-cookies-btn">Dismiss</button>
+      <button type="button" class="download-button" id="accept-cookies-btn">${window.t ? t("cookie.accept") : "Accept"}</button>
+      <button type="button" class="btn cookie-banner__secondary" id="dismiss-cookies-btn">${window.t ? t("cookie.dismiss") : "Dismiss"}</button>
     </div>
   `;
 
@@ -65,6 +62,36 @@ function createCookieBanner() {
   document.getElementById("dismiss-cookies-btn").addEventListener("click", function () {
     handleCookieConsent("dismissed");
   });
+}
+
+function rerenderCookieBanner() {
+  const banner = document.getElementById("cookie-banner");
+
+  if (!banner) {
+    return;
+  }
+
+  banner.setAttribute("aria-label", window.t ? t("cookie.ariaLabel") : "Cookie notice");
+  const title = banner.querySelector("#cookie-banner-title");
+  const body = banner.querySelector(".cookie-banner__content p");
+  const accept = banner.querySelector("#accept-cookies-btn");
+  const dismiss = banner.querySelector("#dismiss-cookies-btn");
+
+  if (title) {
+    title.textContent = window.t ? t("cookie.title") : title.textContent;
+  }
+
+  if (body) {
+    body.innerHTML = window.t ? t("cookie.body") : body.innerHTML;
+  }
+
+  if (accept) {
+    accept.textContent = window.t ? t("cookie.accept") : accept.textContent;
+  }
+
+  if (dismiss) {
+    dismiss.textContent = window.t ? t("cookie.dismiss") : dismiss.textContent;
+  }
 }
 
 function initializeCookieBanner() {
@@ -81,3 +108,4 @@ function resetCookieConsent() {
 }
 
 document.addEventListener("DOMContentLoaded", initializeCookieBanner);
+document.addEventListener("biztrack:languagechange", rerenderCookieBanner);

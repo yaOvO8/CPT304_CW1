@@ -72,10 +72,10 @@ window.onload = function () {
 
 function addOrUpdate(event) {
     event.preventDefault();
-    let type = document.getElementById("submitBtn").textContent;
-    if (type === 'Add') {
+    let type = document.getElementById("submitBtn").dataset.mode;
+    if (type === 'add') {
         newTransaction(event);
-    } else if (type === 'Update'){
+    } else if (type === 'update'){
         const trId = document.getElementById("tr-id").value;
         updateTransaction(+trId); // convert to number
     }
@@ -110,7 +110,7 @@ function newTransaction(event) {
     transactions.push(transaction);
     renderTransactions(transactions);
     localStorage.setItem("bizTrackTransactions", JSON.stringify(transactions));
-    showStatusMessage(`Expense ${trID} added successfully.`);
+    showStatusMessage(t("expenses.msg.added", { id: trID }));
     displayExpenses();
     document.getElementById("transaction-form").reset();
     closeForm();
@@ -159,11 +159,11 @@ function renderTransactions(transactions) {
         transactionRow.dataset.trAmount = transaction.trAmount;
         transactionRow.dataset.trNotes = transaction.trNotes;
 
-        const formattedAmount = typeof transaction.trAmount === 'number' ? `$${transaction.trAmount.toFixed(2)}` : '';
+        const formattedAmount = typeof transaction.trAmount === 'number' ? formatCurrency(transaction.trAmount) : '';
 
         transactionRow.appendChild(createCell(String(index + 1)));
         transactionRow.appendChild(createCell(transaction.trDate));
-        transactionRow.appendChild(createCell(transaction.trCategory));
+        transactionRow.appendChild(createCell(translateDynamicValue("category", transaction.trCategory)));
         transactionRow.appendChild(createCell(formattedAmount, "tr-amount"));
         transactionRow.appendChild(createCell(transaction.trNotes));
 
@@ -171,13 +171,13 @@ function renderTransactions(transactions) {
         actionCell.className = "action";
 
         actionCell.appendChild(createActionIcon({
-            label: `Edit expense ${transaction.trID}`,
+            label: t("expenses.action.edit", { id: transaction.trID }),
             iconClassName: "edit-icon fa-solid fa-pen-to-square",
             onClick: () => editRow(transaction.trID),
         }));
 
         actionCell.appendChild(createActionIcon({
-            label: `Delete expense ${transaction.trID}`,
+            label: t("expenses.action.delete", { id: transaction.trID }),
             iconClassName: "delete-icon fas fa-trash-alt",
             onClick: () => deleteTransaction(transaction.trID),
         }));
@@ -195,7 +195,7 @@ function displayExpenses() {
         .reduce((total, transaction) => total + transaction.trAmount,0);
 
     resultElement.innerHTML = `
-        <span>Total Expenses: $${totalExpenses.toFixed(2)}</span>
+        <span>${t("expenses.totalExpenses", { amount: formatCurrency(totalExpenses) })}</span>
     `;
 }
 
@@ -208,7 +208,8 @@ function editRow(trID) {
     document.getElementById("tr-amount").value = trToEdit.trAmount;
     document.getElementById("tr-notes").value = trToEdit.trNotes;
   
-    document.getElementById("submitBtn").textContent = "Update";
+    document.getElementById("submitBtn").dataset.mode = "update";
+    document.getElementById("submitBtn").textContent = t("common.update");
 
     document.getElementById("transaction-form").style.display = "block";
     clearStatusMessage();
@@ -223,7 +224,7 @@ function deleteTransaction(trID) {
         localStorage.setItem("bizTrackTransactions", JSON.stringify(transactions));
 
         renderTransactions(transactions);
-        showStatusMessage(`Expense ${trID} deleted successfully.`);
+        showStatusMessage(t("expenses.msg.deleted", { id: trID }));
     }
 }
 
@@ -244,10 +245,11 @@ function deleteTransaction(trID) {
         localStorage.setItem("bizTrackTransactions", JSON.stringify(transactions));
 
         renderTransactions(transactions);
-        showStatusMessage(`Expense ${updatedTransaction.trID} updated successfully.`);
+        showStatusMessage(t("expenses.msg.updated", { id: updatedTransaction.trID }));
 
         document.getElementById("transaction-form").reset();
-        document.getElementById("submitBtn").textContent = "Add";
+        document.getElementById("submitBtn").dataset.mode = "add";
+        document.getElementById("submitBtn").textContent = t("common.add");
         closeForm();
     }
 }
@@ -331,3 +333,9 @@ function generateCSV(data) {
 
     return `${headers}\n${rows.join('\n')}`;
 }
+
+document.addEventListener("biztrack:languagechange", function () {
+    renderTransactions(transactions);
+    const submitButton = document.getElementById("submitBtn");
+    submitButton.textContent = t(submitButton.dataset.mode === "update" ? "common.update" : "common.add");
+});

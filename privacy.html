@@ -12,14 +12,14 @@
     <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
     <title>Privacy Policy - BizTrack</title>
 </head>
-<body>
+<body data-page-title-key="titles.privacy">
     <div id="sidebar" class="sidebar">
         <div class="logo">
             <a href="./index.html">
                 <i class="fas fa-b"></i>
                 <span>BizTrack</span>
             </a>
-            <button type="button" class="icon-button sidebar-close" aria-label="Close sidebar" onclick="closeSidebar()">
+            <button type="button" class="icon-button sidebar-close" data-i18n-aria-label="common.closeSidebar" aria-label="Close sidebar" onclick="closeSidebar()">
                 <i class="fa-solid fa-xmark" aria-hidden="true"></i>
             </button>
         </div>
@@ -27,43 +27,43 @@
             <li>
                 <a href="./index.html">
                     <i class="fa-solid fa-gauge-high"></i>
-                    <span>Dashboard</span>
+                    <span data-i18n="nav.dashboard">Dashboard</span>
                 </a>
             </li>
             <li>
                 <a href="./products.html">
                     <i class="fas fa-dolly"></i>
-                    <span>Products</span>
+                    <span data-i18n="nav.products">Products</span>
                 </a>
             </li>
             <li>
                 <a href="./orders.html">
                     <i class="fas fa-shopping-cart"></i>
-                    <span>Orders</span>
+                    <span data-i18n="nav.orders">Orders</span>
                 </a>
             </li>
             <li>
                 <a href="./finances.html">
                     <i class="fas fa-sack-dollar"></i>
-                    <span>Expenses</span>
+                    <span data-i18n="nav.expenses">Expenses</span>
                 </a>
             </li>
             <li>
                 <a href="./help.html">
                     <i class="fas fa-question-circle"></i>
-                    <span>Help</span>
+                    <span data-i18n="nav.help">Help</span>
                 </a>
             </li>
             <li class="active">
                 <a href="./privacy.html">
                     <i class="fa-solid fa-shield-halved"></i>
-                    <span>Privacy Policy</span>
+                    <span data-i18n="nav.privacy">Privacy Policy</span>
                 </a>
             </li>
             <li class="logout">
                 <a href="./about.html">
                     <i class="fa-solid fa-users-line"></i>
-                    <span>Meet the Developer</span>
+                    <span data-i18n="nav.about">Meet the Developer</span>
                 </a>
             </li>
         </ul>
@@ -71,11 +71,25 @@
 
     <div class="main-content">
         <div class="header-wrapper">
-            <button type="button" class="menu-icon icon-button" aria-label="Open sidebar" onclick="openSidebar()">
-                <i class="fa-solid fa-bars" aria-hidden="true"></i>
-            </button>
+            <div class="header-tools">
+                <button type="button" class="menu-icon icon-button header-tool-button" data-i18n-aria-label="common.openSidebar" aria-label="Open sidebar" onclick="openSidebar()">
+                    <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                </button>
+                <div class="language-picker language-picker--header">
+                    <button type="button" id="language-toggle" class="language-toggle language-toggle--header" data-i18n-aria-label="common.language" aria-label="Language" aria-expanded="false">
+                        <span class="language-toggle__icon language-toggle__icon--header"><i class="fa-solid fa-globe" aria-hidden="true"></i></span>
+                        <span id="current-language-code" class="language-toggle__code language-toggle__code--header">EN</span>
+                    </button>
+                    <div id="language-menu" class="language-menu language-menu--header" role="menu">
+                        <button type="button" data-language-option="en" class="language-option" role="menuitem">English</button>
+                        <button type="button" data-language-option="zh" class="language-option" role="menuitem">中文</button>
+                        <button type="button" data-language-option="fr" class="language-option" role="menuitem">Français</button>
+                        <button type="button" data-language-option="ja" class="language-option" role="menuitem">日本語</button>
+                    </div>
+                </div>
+            </div>
             <div class="header-title">
-                <h2>Privacy Policy</h2>
+                <h2 data-i18n="privacy.header">Privacy Policy</h2>
             </div>
             <div class="user-info">
             </div>
@@ -84,50 +98,51 @@
         <div class="guide-container privacy-container">
             <section>
                 <article>
-                    <h3 class="main-title">Overview</h3>
-                    <p>BizTrack is a front-end business tracking project. This site does not require a user account and does not send your product, order, or expense records to a back-end server.</p>
+                    <h3 class="main-title" data-i18n="privacy.overviewTitle">Overview</h3>
+                    <p data-i18n="privacy.overviewBody">BizTrack is a front-end business tracking project. This site does not require a user account and does not send your product, order, or expense records to a back-end server.</p>
                 </article>
                 <article>
-                    <h3 class="main-title">What We Store</h3>
-                    <p>BizTrack stores data in your browser using local storage so the app can remember your records and preferences between visits.</p>
+                    <h3 class="main-title" data-i18n="privacy.storeTitle">What We Store</h3>
+                    <p data-i18n="privacy.storeBody">BizTrack stores data in your browser using local storage so the app can remember your records and preferences between visits.</p>
                     <ol>
-                        <li>Products you add or edit.</li>
-                        <li>Orders you add or edit.</li>
-                        <li>Expenses you add or edit.</li>
-                        <li>Your cookie banner preference.</li>
+                        <li data-i18n="privacy.storeItem1">Products you add or edit.</li>
+                        <li data-i18n="privacy.storeItem2">Orders you add or edit.</li>
+                        <li data-i18n="privacy.storeItem3">Expenses you add or edit.</li>
+                        <li data-i18n="privacy.storeItem4">Your cookie banner preference.</li>
                     </ol>
                 </article>
                 <article>
-                    <h3 class="main-title">Why We Store It</h3>
-                    <p>The stored data is used only to keep the app functional on your device, including table contents, dashboard totals, charts, and the cookie banner choice.</p>
+                    <h3 class="main-title" data-i18n="privacy.whyTitle">Why We Store It</h3>
+                    <p data-i18n="privacy.whyBody">The stored data is used only to keep the app functional on your device, including table contents, dashboard totals, charts, and the cookie banner choice.</p>
                 </article>
                 <article>
-                    <h3 class="main-title">Cookie Banner</h3>
-                    <p>The banner on this site lets you accept or dismiss the notice. You can change that choice at any time from the footer link on any page.</p>
+                    <h3 class="main-title" data-i18n="privacy.bannerTitle">Cookie Banner</h3>
+                    <p data-i18n="privacy.bannerBody">The banner on this site lets you accept or dismiss the notice. You can change that choice at any time from the footer link on any page.</p>
                 </article>
                 <article>
-                    <h3 class="main-title">Third-Party Resources</h3>
-                    <p>BizTrack loads third-party front-end resources such as Font Awesome, Google Fonts, and ApexCharts CDNs. These services may receive standard browser requests when the page loads.</p>
+                    <h3 class="main-title" data-i18n="privacy.thirdPartyTitle">Third-Party Resources</h3>
+                    <p data-i18n="privacy.thirdPartyBody">BizTrack loads third-party front-end resources such as Font Awesome, Google Fonts, and ApexCharts CDNs. These services may receive standard browser requests when the page loads.</p>
                 </article>
                 <article>
-                    <h3 class="main-title">Your Control</h3>
-                    <p>You can clear BizTrack data at any time by clearing your browser storage for this site. Doing that removes saved records and resets the cookie banner preference.</p>
+                    <h3 class="main-title" data-i18n="privacy.controlTitle">Your Control</h3>
+                    <p data-i18n="privacy.controlBody">You can clear BizTrack data at any time by clearing your browser storage for this site. Doing that removes saved records and resets the cookie banner preference.</p>
                 </article>
                 <article>
-                    <h3 class="main-title">Contact</h3>
-                    <p>If you want more context about the project, use the <a href="./about.html">Meet the Developer</a> page or the <a href="./help.html">Help</a> page.</p>
+                    <h3 class="main-title" data-i18n="privacy.contactTitle">Contact</h3>
+                    <p data-i18n-html="privacy.contactBody">If you want more context about the project, use the <a href="./about.html">Meet the Developer</a> page or the <a href="./help.html">Help</a> page.</p>
                 </article>
             </section>
         </div>
         <footer class="site-footer">
-            <p>BizTrack keeps data in your browser only.</p>
+            <p data-i18n="footer.storageNotice">BizTrack keeps data in your browser only.</p>
             <div class="site-footer__links">
-                <a href="./privacy.html">Privacy Policy</a>
-                <button type="button" class="footer-link-button" onclick="resetCookieConsent()">Cookie settings</button>
+                <a href="./privacy.html" data-i18n="footer.privacyPolicy">Privacy Policy</a>
+                <button type="button" class="footer-link-button" data-i18n="footer.cookieSettings" onclick="resetCookieConsent()">Cookie settings</button>
             </div>
         </footer>
     </div>
 
+    <script src="./i18n.js"></script>
     <script src="./help.js"></script>
     <script src="./cookie-banner.js"></script>
 </body>

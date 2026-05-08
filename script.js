@@ -11,6 +11,10 @@ function closeSidebar() {
 
 
 window.onload = function () {
+  renderDashboardSummary();
+};
+
+function renderDashboardSummary() {
   const expenses = JSON.parse(localStorage.getItem('bizTrackTransactions')) || [
     {
       trID: 1,
@@ -117,25 +121,25 @@ window.onload = function () {
   const ordDiv = document.getElementById('num-orders');
 
   revDiv.innerHTML = `
-      <span class="title">Revenue</span>
-      <span class="amount-value">$${totalRevenues.toFixed(2)}</span> 
+      <span class="title">${t("dashboard.revenue")}</span>
+      <span class="amount-value">${formatCurrency(totalRevenues)}</span> 
   `;
 
   expDiv.innerHTML = `
-    <span class="title">Expenses</span>
-    <span class="amount-value">$${totalExpenses.toFixed(2)}</span>
+    <span class="title">${t("dashboard.expenses")}</span>
+    <span class="amount-value">${formatCurrency(totalExpenses)}</span>
   `;
 
   balDiv.innerHTML = `
-    <span class="title">Balance</span>
-    <span class="amount-value">$${totalBalance.toFixed(2)}</span>
+    <span class="title">${t("dashboard.balance")}</span>
+    <span class="amount-value">${formatCurrency(totalBalance)}</span>
   `;
 
   ordDiv.innerHTML = `
-    <span class="title">Orders</span>
+    <span class="title">${t("dashboard.orders")}</span>
     <span class="amount-value">${numOrders}</span>
   `;
-};
+}
 
 function calculateExpTotal(transactions) {
   return transactions.reduce((total, transaction) => total + transaction.trAmount, 0);
@@ -167,6 +171,17 @@ function calculateCategorySales(products) {
 
 
 function initializeChart() {
+  const existingBarChart = document.querySelector("#bar-chart");
+  const existingDonutChart = document.querySelector("#donut-chart");
+
+  if (existingBarChart) {
+    existingBarChart.innerHTML = "";
+  }
+
+  if (existingDonutChart) {
+    existingDonutChart.innerHTML = "";
+  }
+
   const items = JSON.parse(localStorage.getItem('bizTrackProducts')) || [
     {
       prodID: "PD001",
@@ -217,7 +232,7 @@ function initializeChart() {
 
   const barChartOptions = {
       series: [{
-          name: "Total Sales",
+          name: t("dashboard.totalSales"),
           data: Object.values(sortedCategorySales),
       }],
       chart: {
@@ -247,14 +262,14 @@ function initializeChart() {
         opacity: 0.7,
       },
       xaxis: {
-        categories: Object.keys(sortedCategorySales),
+        categories: Object.keys(sortedCategorySales).map(category => translateDynamicValue("category", category)),
         axisTicks: {
           show: false,
         },
       },
       yaxis: {
         title: {
-          text: 'Total Sales ($)',
+          text: t("dashboard.totalSalesAxis"),
         },
         axisTicks: {
           show: false,
@@ -263,7 +278,7 @@ function initializeChart() {
       tooltip: {
         y: {
           formatter: function (val) {
-            return '$' + val.toFixed(2);
+            return formatCurrency(val);
           }
         }
       }
@@ -334,7 +349,7 @@ function initializeChart() {
 
   const donutChartOptions = {
     series: Object.values(categoryExpData),
-    labels: Object.keys(categoryExpData),
+    labels: Object.keys(categoryExpData).map(category => translateDynamicValue("category", category)),
     chart: {
       // height: 350,
       type: 'donut',
@@ -373,7 +388,7 @@ function initializeChart() {
     tooltip: {
       y: {
         formatter: function (val) {
-          return '$' + val.toFixed(2);
+          return formatCurrency(val);
         }
       }
     },
@@ -385,3 +400,8 @@ function initializeChart() {
   );
   donutChart.render();
 };
+
+document.addEventListener("biztrack:languagechange", function () {
+  renderDashboardSummary();
+  initializeChart();
+});

@@ -12,14 +12,14 @@
     <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
     <title>About - Biztrack</title>
 </head>
-<body>
+<body data-page-title-key="titles.about">
     <div id="sidebar" class="sidebar">
         <div class="logo">
             <a href="./index.html">
                 <i class="fas fa-b"></i>
                 <span>BizTrack</span>
             </a>
-            <button type="button" class="icon-button sidebar-close" aria-label="Close sidebar" onclick="closeSidebar()">
+            <button type="button" class="icon-button sidebar-close" data-i18n-aria-label="common.closeSidebar" aria-label="Close sidebar" onclick="closeSidebar()">
                 <i class="fa-solid fa-xmark" aria-hidden="true"></i>
             </button>
         </div>
@@ -27,43 +27,43 @@
             <li>
                 <a href="./index.html">
                     <i class="fa-solid fa-gauge-high"></i>
-                    <span>Dashboard</span>
+                    <span data-i18n="nav.dashboard">Dashboard</span>
                 </a>
             </li>
             <li>
                 <a href="./products.html">
                     <i class="fas fa-dolly"></i>
-                    <span>Products</span>
+                    <span data-i18n="nav.products">Products</span>
                 </a>
             </li>
             <li>
                 <a href="./orders.html">
                     <i class="fas fa-shopping-cart"></i>
-                    <span>Orders</span>
+                    <span data-i18n="nav.orders">Orders</span>
                 </a>
             </li>
             <li>
                 <a href="./finances.html">
                     <i class="fas fa-sack-dollar"></i>
-                    <span>Expenses</span>
+                    <span data-i18n="nav.expenses">Expenses</span>
                 </a>
             </li>
             <li>
                 <a href="./help.html">
                     <i class="fas fa-question-circle"></i>
-                    <span>Help</span>
+                    <span data-i18n="nav.help">Help</span>
                 </a>
             </li>
             <li>
                 <a href="./privacy.html">
                     <i class="fa-solid fa-shield-halved"></i>
-                    <span>Privacy Policy</span>
+                    <span data-i18n="nav.privacy">Privacy Policy</span>
                 </a>
             </li>
             <li class="logout active">
                 <a href="./about.html">
                     <i class="fa-solid fa-users-line"></i>
-                    <span>Meet the Developer</span>
+                    <span data-i18n="nav.about">Meet the Developer</span>
                 </a>
             </li>
         </ul>
@@ -71,11 +71,25 @@
 
     <div class="main-content">
         <div class="header-wrapper">
-            <button type="button" class="menu-icon icon-button" aria-label="Open sidebar" onclick="openSidebar()">
-                <i class="fa-solid fa-bars" aria-hidden="true"></i>
-            </button>
+            <div class="header-tools">
+                <button type="button" class="menu-icon icon-button header-tool-button" data-i18n-aria-label="common.openSidebar" aria-label="Open sidebar" onclick="openSidebar()">
+                    <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                </button>
+                <div class="language-picker language-picker--header">
+                    <button type="button" id="language-toggle" class="language-toggle language-toggle--header" data-i18n-aria-label="common.language" aria-label="Language" aria-expanded="false">
+                        <span class="language-toggle__icon language-toggle__icon--header"><i class="fa-solid fa-globe" aria-hidden="true"></i></span>
+                        <span id="current-language-code" class="language-toggle__code language-toggle__code--header">EN</span>
+                    </button>
+                    <div id="language-menu" class="language-menu language-menu--header" role="menu">
+                        <button type="button" data-language-option="en" class="language-option" role="menuitem">English</button>
+                        <button type="button" data-language-option="zh" class="language-option" role="menuitem">中文</button>
+                        <button type="button" data-language-option="fr" class="language-option" role="menuitem">Français</button>
+                        <button type="button" data-language-option="ja" class="language-option" role="menuitem">日本語</button>
+                    </div>
+                </div>
+            </div>
             <div class="header-title">
-                <h2>My Coding Journey</h2>
+                <h2 data-i18n="about.header">My Coding Journey</h2>
             </div>
             <div class="user-info">
             </div>
@@ -84,52 +98,49 @@
         <div class="about-container">
             <section id="using-biztrack">
                 <article>
-                    <h3 class="main-title">Hey, I'm Sumayyah!
-                    </h3>
-                    <p>Welcome to my little corner of the internet, where I'm rolling up my sleeves and diving into the coding world. I’m not your typical tech guru – I’m just a small business owner navigating the hustle and bustle of entrepreneurship. Oh, and did I mention I’m also part of the <a href="https://www.getcoding.ca/coaching-program-nl" target="_blank">GetCoding NL</a> program? Yeah, it's been quite the journey, and I owe a huge shoutout to my coding coach, Sam.</p> 
+                    <h3 class="main-title" data-i18n="about.introTitle">Hey, I'm Sumayyah!</h3>
+                    <p data-i18n-html="about.introBody">Welcome to my little corner of the internet, where I'm rolling up my sleeves and diving into the coding world. I'm not your typical tech guru. I'm a small business owner navigating the hustle and bustle of entrepreneurship, and I'm also part of the <a href="https://www.getcoding.ca/coaching-program-nl" target="_blank">GetCoding NL</a> program.</p>
                 </article>
                 <article>
-                    <p>Let me spill the tea on BizTrack, my brainchild. So, picture this: I'm running a small business, trying to keep tabs on products, orders, and the never-ending finances - It’s a lot. That's when the light bulb moment happened, and BizTrack was born. It's not just a project; it's my answer to the chaos that comes with managing a business.</p>
-
-                    <p>BizTrack is my attempt at making life a bit more straightforward for small business owners like me. You know, the ones who are constantly multitasking and could use a break. It's a manifestation of my passion for leveraging technology to enhance the efficiency and effectiveness of business operations. It's not polished; it's not perfect, it's just a real solution for real-world challenges.</p>
-
-                    <p> I'm a student at GetCoding NL, a software development program that's turning me from someone who googles how websites work into someone who actually understands and builds them. And guess what? BizTrack is my first module project, allowing me to practically apply the skills and knowledge gained in the program. Learning by doing, they say, and that’s exactly what I'm doing.</p>
-
-                    <p> But none of this would be possible without the guidance of my amazing coach, <a href="https://github.com/samwise-nl" target="_blank">Sam Russell</a>. Sam has been the compass in my coding journey. Patient, encouraging, and always ready with a helpful tip – he has made navigating the coding seas a whole lot less daunting.</p>
-
-                    <p>So, why spill all this in an about me section? Well, I’m not just sharing my story; I’m inviting you to join me on my journey. Whether you're into the chaos of small business life, curious about coding escapades, or just want to see where the two collide – you're welcome here.</p>
+                    <p data-i18n="about.body1">BizTrack came out of the real challenge of managing products, orders, and finances while running a business. It's my practical answer to that daily chaos.</p>
+                    <p data-i18n="about.body2">This project is my attempt to make life more straightforward for small business owners who are constantly multitasking and could use a break.</p>
+                    <p data-i18n="about.body3">I'm a student in a software development program that is turning curiosity into real building skills, and BizTrack is where I put those lessons into practice.</p>
+                    <p data-i18n-html="about.body4">A big part of that journey has been the guidance of my coach, <a href="https://github.com/samwise-nl" target="_blank">Sam Russell</a>, whose support helped make the path feel far less intimidating.</p>
+                    <p data-i18n="about.body5">So this page is really an invitation. If you're curious about small business life, coding, or where those two worlds meet, you're welcome here.</p>
 
                     <ul class="contact-icon">
                         <li>
                             <a href="https://www.linkedin.com/in/sumayyahmusa/" target="_blank" rel="noopener noreferrer">
                                 <i class="fa-brands fa-linkedin"></i>
-                            </a> 
+                            </a>
                         </li>
                         <li>
                             <a href="https://github.com/sumusa/" target="_blank" rel="noopener noreferrer">
                                 <i class="fa-brands fa-square-github"></i>
-                            </a> 
+                            </a>
                         </li>
                         <li>
                             <a href="mailto:info@summeesarts.com">
                                 <i class="fa-solid fa-envelope"></i>
-                            </a> 
+                            </a>
                         </li>
                     </ul>
 
-                    <p>Here's to coding, chaos, everything in between and heartfelt thanks to Sam!</p>
+                    <p data-i18n="about.footer">Here's to coding, chaos, everything in between, and heartfelt thanks to Sam!</p>
                 </article>
             </section>
         </div>
         <footer class="site-footer">
-            <p>BizTrack keeps data in your browser only.</p>
+            <p data-i18n="footer.storageNotice">BizTrack keeps data in your browser only.</p>
             <div class="site-footer__links">
-                <a href="./privacy.html">Privacy Policy</a>
-                <button type="button" class="footer-link-button" onclick="resetCookieConsent()">Cookie settings</button>
+                <a href="./privacy.html" data-i18n="footer.privacyPolicy">Privacy Policy</a>
+                <button type="button" class="footer-link-button" data-i18n="footer.cookieSettings" onclick="resetCookieConsent()">Cookie settings</button>
             </div>
         </footer>
     </div>
 
+    <script src="./i18n.js"></script>
     <script src="./help.js"></script>
     <script src="./cookie-banner.js"></script>
 </body>
+</html>

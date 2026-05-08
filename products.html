@@ -12,14 +12,14 @@
     <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
     <title>Products - BizTrack</title>
 </head>
-<body>
+<body data-page-title-key="titles.products">
     <div id="sidebar" class="sidebar">
         <div class="logo">
             <a href="./index.html">
                 <i class="fas fa-b"></i>
                 <span>BizTrack</span>
             </a>
-            <button type="button" class="icon-button sidebar-close" aria-label="Close sidebar" onclick="closeSidebar()">
+            <button type="button" class="icon-button sidebar-close" data-i18n-aria-label="common.closeSidebar" aria-label="Close sidebar" onclick="closeSidebar()">
                 <i class="fa-solid fa-xmark" aria-hidden="true"></i>
             </button>
         </div>
@@ -27,43 +27,43 @@
             <li>
                 <a href="./index.html">
                     <i class="fa-solid fa-gauge-high"></i>
-                    <span>Dashboard</span>
+                    <span data-i18n="nav.dashboard">Dashboard</span>
                 </a>
             </li>
             <li class="active">
                 <a href="./products.html">
                     <i class="fas fa-dolly"></i>
-                    <span>Products</span>
+                    <span data-i18n="nav.products">Products</span>
                 </a>
             </li>
             <li>
                 <a href="./orders.html">
                     <i class="fas fa-shopping-cart"></i>
-                    <span>Orders</span>
+                    <span data-i18n="nav.orders">Orders</span>
                 </a>
             </li>
             <li>
                 <a href="./finances.html">
                     <i class="fas fa-sack-dollar"></i>
-                    <span>Expenses</span>
+                    <span data-i18n="nav.expenses">Expenses</span>
                 </a>
             </li>
             <li>
                 <a href="./help.html">
                     <i class="fas fa-question-circle"></i>
-                    <span>Help</span>
+                    <span data-i18n="nav.help">Help</span>
                 </a>
             </li>
             <li>
                 <a href="./privacy.html">
                     <i class="fa-solid fa-shield-halved"></i>
-                    <span>Privacy Policy</span>
+                    <span data-i18n="nav.privacy">Privacy Policy</span>
                 </a>
             </li>
             <li class="logout">
                 <a href="./about.html">
                     <i class="fa-solid fa-users-line"></i>
-                    <span>Meet the Developer</span>
+                    <span data-i18n="nav.about">Meet the Developer</span>
                 </a>
             </li>
         </ul>
@@ -71,18 +71,32 @@
 
     <div class="main-content">
         <div class="header-wrapper">
-            <button type="button" class="menu-icon icon-button" aria-label="Open sidebar" onclick="openSidebar()">
-                <i class="fa-solid fa-bars" aria-hidden="true"></i>
-            </button>
+            <div class="header-tools">
+                <button type="button" class="menu-icon icon-button header-tool-button" data-i18n-aria-label="common.openSidebar" aria-label="Open sidebar" onclick="openSidebar()">
+                    <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                </button>
+                <div class="language-picker language-picker--header">
+                    <button type="button" id="language-toggle" class="language-toggle language-toggle--header" data-i18n-aria-label="common.language" aria-label="Language" aria-expanded="false">
+                        <span class="language-toggle__icon language-toggle__icon--header"><i class="fa-solid fa-globe" aria-hidden="true"></i></span>
+                        <span id="current-language-code" class="language-toggle__code language-toggle__code--header">EN</span>
+                    </button>
+                    <div id="language-menu" class="language-menu language-menu--header" role="menu">
+                        <button type="button" data-language-option="en" class="language-option" role="menuitem">English</button>
+                        <button type="button" data-language-option="zh" class="language-option" role="menuitem">中文</button>
+                        <button type="button" data-language-option="fr" class="language-option" role="menuitem">Français</button>
+                        <button type="button" data-language-option="ja" class="language-option" role="menuitem">日本語</button>
+                    </div>
+                </div>
+            </div>
             <div class="header-title">
                 <!-- <span>Primary</span> -->
-                <h2>Products</h2>
+                <h2 data-i18n="titles.products">Products</h2>
             </div>
                 <div class="user-info">
                 <div class="search-box">
-                    <label class="sr-only" for="searchInput">Search products</label>
+                    <label class="sr-only" for="searchInput" data-i18n="products.searchLabel">Search products</label>
                     <i class="fas fa-search"></i>
-                    <input type="search" id="searchInput" placeholder="Search">
+                    <input type="search" id="searchInput" data-i18n-placeholder="products.searchPlaceholder" placeholder="Search">
                 </div>
                 <!-- <i class="fas fa-user-alt fa-xl"></i> -->
             </div>
@@ -90,10 +104,10 @@
 
         <div class="table-wrapper">
             <div class="product-title">
-                <h3 class="main-title">Products</h3>
+                <h3 class="main-title" data-i18n="titles.products">Products</h3>
                 <div class="product-button">
-                    <button class="add-button" onclick="openForm()">Add Product</button>
-                    <button class="download-button" onclick="exportToCSV()">Download CSV</button>
+                    <button class="add-button" data-i18n="products.addProduct" onclick="openForm()">Add Product</button>
+                    <button class="download-button" data-i18n="products.downloadCsv" onclick="exportToCSV()">Download CSV</button>
                 </div>
             </div>
             <div id="action-feedback" class="page-feedback" role="status" aria-live="polite" aria-atomic="true"></div>
@@ -101,65 +115,65 @@
                 <form class="form-container" id="product-form" onsubmit="addOrUpdate(event)">
                     <div class="form-columns">
                         <div class="first-col">
-                            <label for="product-id"><b>Product ID: </b></label>
+                            <label for="product-id"><b data-i18n="products.productId">Product ID</b><b>: </b></label>
                             <input type="text" id="product-id" placeholder="PD001" required>
                         
-                            <label for="product-name"><b>Product Name</b></label>
+                            <label for="product-name"><b data-i18n="products.productName">Product Name</b></label>
                             <select name="product-name" id="product-name" required>
-                                <option value="" disabled selected hidden>Choose a product</option>
-                                <optgroup label="Hats">
-                                    <option value="Baseball caps">Baseball caps</option>
-                                    <option value="Snapbacks">Snapbacks</option>
-                                    <option value="Beanies">Beanies</option>
-                                    <option value="Bucket hats">Bucket hats</option>
+                                <option value="" disabled selected hidden data-i18n="products.chooseProduct">Choose a product</option>
+                                <optgroup label="Hats" data-i18n-label="dynamic.category.hats">
+                                    <option value="Baseball caps" data-i18n="dynamic.product.baseballCaps">Baseball caps</option>
+                                    <option value="Snapbacks" data-i18n="dynamic.product.snapbacks">Snapbacks</option>
+                                    <option value="Beanies" data-i18n="dynamic.product.beanies">Beanies</option>
+                                    <option value="Bucket hats" data-i18n="dynamic.product.bucketHats">Bucket hats</option>
                                 </optgroup>
-                                <optgroup label="Drinkware">
-                                    <option value="Mugs">Mugs</option>
-                                    <option value="Water bottles">Water bottles</option>
-                                    <option value="Tumblers">Tumblers</option>
+                                <optgroup label="Drinkware" data-i18n-label="dynamic.category.drinkware">
+                                    <option value="Mugs" data-i18n="dynamic.product.mugs">Mugs</option>
+                                    <option value="Water bottles" data-i18n="dynamic.product.waterBottles">Water bottles</option>
+                                    <option value="Tumblers" data-i18n="dynamic.product.tumblers">Tumblers</option>
                                 </optgroup>   
-                                <optgroup label="Clothing">
-                                    <option value="T-shirts">T-shirts</option>
-                                    <option value="Sweatshirts">Sweatshirts</option>
-                                    <option value="Hoodies">Hoodies</option>
+                                <optgroup label="Clothing" data-i18n-label="dynamic.category.clothing">
+                                    <option value="T-shirts" data-i18n="dynamic.product.tshirts">T-shirts</option>
+                                    <option value="Sweatshirts" data-i18n="dynamic.product.sweatshirts">Sweatshirts</option>
+                                    <option value="Hoodies" data-i18n="dynamic.product.hoodies">Hoodies</option>
                                 </optgroup>   
-                                <optgroup label="Accessories">
-                                    <option value="Pillow cases">Pillow cases</option>
-                                    <option value="Tote bags">Tote bags</option>
-                                    <option value="Stickers">Stickers</option>
+                                <optgroup label="Accessories" data-i18n-label="dynamic.category.accessories">
+                                    <option value="Pillow cases" data-i18n="dynamic.product.pillowCases">Pillow cases</option>
+                                    <option value="Tote bags" data-i18n="dynamic.product.toteBags">Tote bags</option>
+                                    <option value="Stickers" data-i18n="dynamic.product.stickers">Stickers</option>
                                 </optgroup>   
-                                <optgroup label="Home decor">
-                                    <option value="Posters">Posters</option>
-                                    <option value="Framed posters">Framed posters</option>
-                                    <option value="Canvas prints">Canvas prints</option>
+                                <optgroup label="Home decor" data-i18n-label="dynamic.category.homeDecor">
+                                    <option value="Posters" data-i18n="dynamic.product.posters">Posters</option>
+                                    <option value="Framed posters" data-i18n="dynamic.product.framedPosters">Framed posters</option>
+                                    <option value="Canvas prints" data-i18n="dynamic.product.canvasPrints">Canvas prints</option>
                                 </optgroup>
                             </select>
     
-                            <label for="product-desc"><b>Product Description:</b></label>
+                            <label for="product-desc"><b data-i18n="products.productDescription">Product Description:</b></label>
                             <input type="text" id="product-desc" placeholder="Travel Mug" required>
                         </div>
                         <div class="second-col">
-                            <label for="product-cat"><b>Product Category:</b></label>
+                            <label for="product-cat"><b data-i18n="products.productCategory">Product Category:</b></label>
                             <select name="product-cat" id="product-cat" required>
-                                <option value="" disabled selected>Choose a category</option>
-                                <option value="Clothing">Clothing</option>
-                                <option value="Drinkware">Drinkware</option>
-                                <option value="Accessories">Accessories</option>
-                                <option value="Hats">Hats</option>
-                                <option value="Home decor">Home decor</option>
+                                <option value="" disabled selected data-i18n="products.chooseCategory">Choose a category</option>
+                                <option value="Clothing" data-i18n="dynamic.category.clothing">Clothing</option>
+                                <option value="Drinkware" data-i18n="dynamic.category.drinkware">Drinkware</option>
+                                <option value="Accessories" data-i18n="dynamic.category.accessories">Accessories</option>
+                                <option value="Hats" data-i18n="dynamic.category.hats">Hats</option>
+                                <option value="Home decor" data-i18n="dynamic.category.homeDecor">Home decor</option>
                             </select>
     
-                            <label for="product-price"><b>Product Price:</b></label>
+                            <label for="product-price"><b data-i18n="products.productPrice">Product Price:</b></label>
                             <input type="number" id="product-price" placeholder="$0.00" min="0.00" max="10000.00" step="0.01" required>
     
-                            <label for="product-sold"><b>Number of Units Sold:</b></label>
+                            <label for="product-sold"><b data-i18n="products.unitsSoldLabel">Number of Units Sold:</b></label>
                             <input type="number" id="product-sold" placeholder="10" required>
                         </div>
                     </div>
                     
                     <div class="button-col">
-                        <button type="submit" class="btn" id="submitBtn">Add</button>
-                        <button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
+                        <button type="submit" class="btn" id="submitBtn" data-mode="add" data-i18n="common.add">Add</button>
+                        <button type="button" class="btn cancel" data-i18n="common.cancel" onclick="closeForm()">Cancel</button>
                     </div>
                 </form>
             </div>
@@ -168,24 +182,24 @@
                     <thead>
                         <tr>
                             <th scope="col">
-                                <button type="button" class="sort-button" aria-label="Sort by product ID" onclick="sortTable('prodID', this)">Product ID</button>
+                                <button type="button" class="sort-button" data-i18n="products.productId" data-i18n-aria-label="products.sort.productId" aria-label="Sort by product ID" onclick="sortTable('prodID', this)">Product ID</button>
                             </th>
                             <th scope="col">
-                                <button type="button" class="sort-button" aria-label="Sort by product name" onclick="sortTable('prodName', this)">Product Name</button>
+                                <button type="button" class="sort-button" data-i18n="products.productName" data-i18n-aria-label="products.sort.productName" aria-label="Sort by product name" onclick="sortTable('prodName', this)">Product Name</button>
                             </th>
                             <th scope="col">
-                                <button type="button" class="sort-button" aria-label="Sort by description" onclick="sortTable('prodDesc', this)">Description</button>
+                                <button type="button" class="sort-button" data-i18n="products.description" data-i18n-aria-label="products.sort.description" aria-label="Sort by description" onclick="sortTable('prodDesc', this)">Description</button>
                             </th>
                             <th scope="col">
-                                <button type="button" class="sort-button" aria-label="Sort by category" onclick="sortTable('prodCat', this)">Category</button>
+                                <button type="button" class="sort-button" data-i18n="products.category" data-i18n-aria-label="products.sort.category" aria-label="Sort by category" onclick="sortTable('prodCat', this)">Category</button>
                             </th>
                             <th scope="col">
-                                <button type="button" class="sort-button" aria-label="Sort by price" onclick="sortTable('prodPrice', this)">Price</button>
+                                <button type="button" class="sort-button" data-i18n="products.price" data-i18n-aria-label="products.sort.price" aria-label="Sort by price" onclick="sortTable('prodPrice', this)">Price</button>
                             </th>
                             <th scope="col">
-                                <button type="button" class="sort-button" aria-label="Sort by units sold" onclick="sortTable('prodSold', this)">Units Sold</button>
+                                <button type="button" class="sort-button" data-i18n="products.unitsSold" data-i18n-aria-label="products.sort.unitsSold" aria-label="Sort by units sold" onclick="sortTable('prodSold', this)">Units Sold</button>
                             </th>
-                            <th>Action</th>
+                            <th data-i18n="common.action">Action</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody">
@@ -198,15 +212,16 @@
                 </table>
             </div>
             <footer class="site-footer">
-                <p>BizTrack keeps data in your browser only.</p>
+                <p data-i18n="footer.storageNotice">BizTrack keeps data in your browser only.</p>
                 <div class="site-footer__links">
-                    <a href="./privacy.html">Privacy Policy</a>
-                    <button type="button" class="footer-link-button" onclick="resetCookieConsent()">Cookie settings</button>
+                    <a href="./privacy.html" data-i18n="footer.privacyPolicy">Privacy Policy</a>
+                    <button type="button" class="footer-link-button" data-i18n="footer.cookieSettings" onclick="resetCookieConsent()">Cookie settings</button>
                 </div>
             </footer>
         </div>
     </div>
 
+    <script src="./i18n.js"></script>
     <script src="./feedback.js"></script>
     <script src="./products.js"></script>
     <script src="./cookie-banner.js"></script>

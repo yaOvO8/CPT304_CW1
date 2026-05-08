@@ -12,14 +12,14 @@
     <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
     <title>Expenses - BizTrack</title>
 </head>
-<body>
+<body data-page-title-key="titles.expenses">
     <div id="sidebar" class="sidebar">
         <div class="logo">
             <a href="./index.html">
                 <i class="fas fa-b"></i>
                 <span>BizTrack</span>
             </a>
-            <button type="button" class="icon-button sidebar-close" aria-label="Close sidebar" onclick="closeSidebar()">
+            <button type="button" class="icon-button sidebar-close" data-i18n-aria-label="common.closeSidebar" aria-label="Close sidebar" onclick="closeSidebar()">
                 <i class="fa-solid fa-xmark" aria-hidden="true"></i>
             </button>
         </div>
@@ -27,43 +27,43 @@
             <li>
                 <a href="./index.html">
                     <i class="fa-solid fa-gauge-high"></i>
-                    <span>Dashboard</span>
+                    <span data-i18n="nav.dashboard">Dashboard</span>
                 </a>
             </li>
             <li>
                 <a href="./products.html">
                     <i class="fas fa-dolly"></i>
-                    <span>Products</span>
+                    <span data-i18n="nav.products">Products</span>
                 </a>
             </li>
             <li>
                 <a href="./orders.html">
                     <i class="fas fa-shopping-cart"></i>
-                    <span>Orders</span>
+                    <span data-i18n="nav.orders">Orders</span>
                 </a>
             </li>
             <li class="active">
                 <a href="./finances.html">
                     <i class="fas fa-sack-dollar"></i>
-                    <span>Expenses</span>
+                    <span data-i18n="nav.expenses">Expenses</span>
                 </a>
             </li>
             <li>
                 <a href="./help.html">
                     <i class="fas fa-question-circle"></i>
-                    <span>Help</span>
+                    <span data-i18n="nav.help">Help</span>
                 </a>
             </li>
             <li>
                 <a href="./privacy.html">
                     <i class="fa-solid fa-shield-halved"></i>
-                    <span>Privacy Policy</span>
+                    <span data-i18n="nav.privacy">Privacy Policy</span>
                 </a>
             </li>
             <li class="logout">
                 <a href="./about.html">
                     <i class="fa-solid fa-users-line"></i>
-                    <span>Meet the Developer</span>
+                    <span data-i18n="nav.about">Meet the Developer</span>
                 </a>
             </li>
         </ul>
@@ -71,18 +71,32 @@
 
     <div class="main-content">
         <div class="header-wrapper">
-            <button type="button" class="menu-icon icon-button" aria-label="Open sidebar" onclick="openSidebar()">
-                <i class="fa-solid fa-bars" aria-hidden="true"></i>
-            </button>
+            <div class="header-tools">
+                <button type="button" class="menu-icon icon-button header-tool-button" data-i18n-aria-label="common.openSidebar" aria-label="Open sidebar" onclick="openSidebar()">
+                    <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                </button>
+                <div class="language-picker language-picker--header">
+                    <button type="button" id="language-toggle" class="language-toggle language-toggle--header" data-i18n-aria-label="common.language" aria-label="Language" aria-expanded="false">
+                        <span class="language-toggle__icon language-toggle__icon--header"><i class="fa-solid fa-globe" aria-hidden="true"></i></span>
+                        <span id="current-language-code" class="language-toggle__code language-toggle__code--header">EN</span>
+                    </button>
+                    <div id="language-menu" class="language-menu language-menu--header" role="menu">
+                        <button type="button" data-language-option="en" class="language-option" role="menuitem">English</button>
+                        <button type="button" data-language-option="zh" class="language-option" role="menuitem">中文</button>
+                        <button type="button" data-language-option="fr" class="language-option" role="menuitem">Français</button>
+                        <button type="button" data-language-option="ja" class="language-option" role="menuitem">日本語</button>
+                    </div>
+                </div>
+            </div>
             <div class="header-title">
                 <!-- <span>Primary</span> -->
-                <h2>Expenses</h2>
+                <h2 data-i18n="titles.expenses">Expenses</h2>
             </div>
                 <div class="user-info">
                 <div class="search-box">
-                    <label class="sr-only" for="searchInput">Search expenses</label>
+                    <label class="sr-only" for="searchInput" data-i18n="expenses.searchLabel">Search expenses</label>
                     <i class="fas fa-search"></i>
-                    <input type="search" id="searchInput" placeholder="Search">
+                    <input type="search" id="searchInput" data-i18n-placeholder="expenses.searchPlaceholder" placeholder="Search">
                 </div>
                 <!-- <i class="fas fa-user-alt fa-xl"></i> -->
             </div>
@@ -90,10 +104,10 @@
 
         <div class="table-wrapper">
             <div class="product-title">
-                <h3 class="main-title">Expenses</h3>
+                <h3 class="main-title" data-i18n="titles.expenses">Expenses</h3>
                 <div class="finance-button">
-                    <button class="add-button" onclick="openForm()">Add Expense</button>
-                    <button class="download-button" onclick="exportToCSV()">Export to CSV</button>
+                    <button class="add-button" data-i18n="expenses.addExpense" onclick="openForm()">Add Expense</button>
+                    <button class="download-button" data-i18n="expenses.exportCsv" onclick="exportToCSV()">Export to CSV</button>
                 </div>
             </div>
             <div id="action-feedback" class="page-feedback" role="status" aria-live="polite" aria-atomic="true"></div>
@@ -102,29 +116,29 @@
                 <form class="form-container" id="transaction-form" onsubmit="addOrUpdate(event)">
                     <div class="form-columns">
                             <input type="hidden" id="tr-id">
-                            <label for="tr-date"><b>Date: </b></label>
+                            <label for="tr-date"><b data-i18n="expenses.date">Date</b><b>: </b></label>
                             <input type="date" id="tr-date" required>
 
-                            <label for="tr-category"><b>Category: </b></label>
+                            <label for="tr-category"><b data-i18n="expenses.category">Category:</b></label>
                             <select name="tr-category" id="tr-category" required>
-                                <option value="" disabled selected hidden>Choose an expense category</option>
-                                <option value="Rent">Rent</option>
-                                <option value="Utilities">Utilities</option>
-                                <option value="Supplies">Supplies</option>
-                                <option value="Order Fulfillment">Order Fulfillment</option>
-                                <option value="Miscellaneous">Miscellaneous</option>
+                                <option value="" disabled selected hidden data-i18n="expenses.chooseCategory">Choose an expense category</option>
+                                <option value="Rent" data-i18n="dynamic.category.rent">Rent</option>
+                                <option value="Utilities" data-i18n="dynamic.category.utilities">Utilities</option>
+                                <option value="Supplies" data-i18n="dynamic.category.supplies">Supplies</option>
+                                <option value="Order Fulfillment" data-i18n="dynamic.category.orderFulfillment">Order Fulfillment</option>
+                                <option value="Miscellaneous" data-i18n="dynamic.category.miscellaneous">Miscellaneous</option>
                             </select>
 
-                            <label for="tr-amount"><b>Amount: </b></label>
+                            <label for="tr-amount"><b data-i18n="expenses.amountLabel">Amount:</b></label>
                             <input type="number" id="tr-amount" placeholder="$0.00" min="0.00" max="10000.00" step="0.01" required>
 
-                            <label for="tr-notes"><b>Notes: </b></label>
+                            <label for="tr-notes"><b data-i18n="expenses.notesLabel">Notes:</b></label>
                             <input type="text" id="tr-notes" placeholder="Power bill" required>
                     </div>
                     
                     <div class="button-col">
-                        <button type="submit" class="btn" id="submitBtn">Add</button>
-                        <button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
+                        <button type="submit" class="btn" id="submitBtn" data-mode="add" data-i18n="common.add">Add</button>
+                        <button type="button" class="btn cancel" data-i18n="common.cancel" onclick="closeForm()">Cancel</button>
                     </div>
                 </form>
             </div>
@@ -134,21 +148,21 @@
                     <thead>
                         <tr>
                             <th scope="col">
-                                <button type="button" class="sort-button" aria-label="Sort by serial number" onclick="sortTable('trID', this)">S/N</button>
+                                <button type="button" class="sort-button" data-i18n="expenses.serialNumber" data-i18n-aria-label="expenses.sort.serialNumber" aria-label="Sort by serial number" onclick="sortTable('trID', this)">S/N</button>
                             </th>
                             <th scope="col">
-                                <button type="button" class="sort-button" aria-label="Sort by date" onclick="sortTable('trDate', this)">Date</button>
+                                <button type="button" class="sort-button" data-i18n="expenses.date" data-i18n-aria-label="expenses.sort.date" aria-label="Sort by date" onclick="sortTable('trDate', this)">Date</button>
                             </th>
                             <th scope="col">
-                                <button type="button" class="sort-button" aria-label="Sort by expense category" onclick="sortTable('trCategory', this)">Expense Category</button>
+                                <button type="button" class="sort-button" data-i18n="expenses.expenseCategory" data-i18n-aria-label="expenses.sort.category" aria-label="Sort by expense category" onclick="sortTable('trCategory', this)">Expense Category</button>
                             </th>
                             <th scope="col">
-                                <button type="button" class="sort-button" aria-label="Sort by amount" onclick="sortTable('trAmount', this)">Amount</button>
+                                <button type="button" class="sort-button" data-i18n="expenses.amount" data-i18n-aria-label="expenses.sort.amount" aria-label="Sort by amount" onclick="sortTable('trAmount', this)">Amount</button>
                             </th>
                             <th scope="col">
-                                <button type="button" class="sort-button" aria-label="Sort by notes" onclick="sortTable('trNotes', this)">Notes</button>
+                                <button type="button" class="sort-button" data-i18n="expenses.notes" data-i18n-aria-label="expenses.sort.notes" aria-label="Sort by notes" onclick="sortTable('trNotes', this)">Notes</button>
                             </th>
-                            <th>Action</th>
+                            <th data-i18n="common.action">Action</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody">
@@ -163,15 +177,16 @@
                 </table>
             </div>
             <footer class="site-footer">
-                <p>BizTrack keeps data in your browser only.</p>
+                <p data-i18n="footer.storageNotice">BizTrack keeps data in your browser only.</p>
                 <div class="site-footer__links">
-                    <a href="./privacy.html">Privacy Policy</a>
-                    <button type="button" class="footer-link-button" onclick="resetCookieConsent()">Cookie settings</button>
+                    <a href="./privacy.html" data-i18n="footer.privacyPolicy">Privacy Policy</a>
+                    <button type="button" class="footer-link-button" data-i18n="footer.cookieSettings" onclick="resetCookieConsent()">Cookie settings</button>
                 </div>
             </footer>
         </div>
     </div>
 
+    <script src="./i18n.js"></script>
     <script src="./feedback.js"></script>
     <script src="./finances.js"></script>
     <script src="./cookie-banner.js"></script>

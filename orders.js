@@ -91,10 +91,10 @@ window.onload = function () {
 
 function addOrUpdate(event) {
     event.preventDefault();
-    let type = document.getElementById("submitBtn").textContent;
-    if (type === 'Add') {
+    let type = document.getElementById("submitBtn").dataset.mode;
+    if (type === 'add') {
         newOrder(event);
-    } else if (type === 'Update'){
+    } else if (type === 'update'){
         const orderID = document.getElementById("order-id").value;
         updateOrder(orderID);
     }
@@ -114,7 +114,7 @@ function newOrder(event) {
   const orderStatus = document.getElementById("order-status").value;
 
   if (isDuplicateID(orderID, null)) {
-    showStatusMessage("Order ID already exists. Please use a unique ID.", "error");
+    showStatusMessage(t("orders.msg.duplicate"), "error");
     return;
   }
 
@@ -134,7 +134,7 @@ function newOrder(event) {
 
   renderOrders(orders);
   localStorage.setItem("bizTrackOrders", JSON.stringify(orders));
-  showStatusMessage(`Order ${orderID} added successfully.`);
+  showStatusMessage(t("orders.msg.added", { id: orderID }));
   document.getElementById("order-form").reset();
   closeForm();
 }
@@ -192,14 +192,14 @@ function renderOrders(orders) {
       orderRow.dataset.orderTotal = order.orderTotal;
       orderRow.dataset.orderStatus = order.orderStatus;
 
-      const formattedPrice = typeof order.itemPrice === 'number' ? `$${order.itemPrice.toFixed(2)}` : '';
-      const formattedShipping = typeof order.shipping === 'number' ? `$${order.shipping.toFixed(2)}` : '';
-      const formattedTaxes = typeof order.taxes === 'number' ? `$${order.taxes.toFixed(2)}` : '';
-      const formattedTotal = typeof order.orderTotal === 'number' ? `$${order.orderTotal.toFixed(2)}` : '';
+      const formattedPrice = typeof order.itemPrice === 'number' ? formatCurrency(order.itemPrice) : '';
+      const formattedShipping = typeof order.shipping === 'number' ? formatCurrency(order.shipping) : '';
+      const formattedTaxes = typeof order.taxes === 'number' ? formatCurrency(order.taxes) : '';
+      const formattedTotal = typeof order.orderTotal === 'number' ? formatCurrency(order.orderTotal) : '';
 
       orderRow.appendChild(createCell(order.orderID));
       orderRow.appendChild(createCell(order.orderDate));
-      orderRow.appendChild(createCell(order.itemName));
+      orderRow.appendChild(createCell(translateDynamicValue("productName", order.itemName)));
       orderRow.appendChild(createCell(formattedPrice));
       orderRow.appendChild(createCell(String(order.qtyBought)));
       orderRow.appendChild(createCell(formattedShipping));
@@ -212,7 +212,7 @@ function renderOrders(orders) {
       const statusClass = statusMap[order.orderStatus] || "";
 
       statusWrapper.className = statusClass ? `status ${statusClass}` : "status";
-      statusText.textContent = order.orderStatus;
+      statusText.textContent = translateDynamicValue("status", order.orderStatus);
       statusWrapper.appendChild(statusText);
       statusCell.appendChild(statusWrapper);
       orderRow.appendChild(statusCell);
@@ -221,13 +221,13 @@ function renderOrders(orders) {
       actionCell.className = "action";
 
       actionCell.appendChild(createActionIcon({
-        label: `Edit order ${order.orderID}`,
+        label: t("orders.action.edit", { id: order.orderID }),
         iconClassName: "edit-icon fa-solid fa-pen-to-square",
         onClick: () => editRow(order.orderID),
       }));
 
       actionCell.appendChild(createActionIcon({
-        label: `Delete order ${order.orderID}`,
+        label: t("orders.action.delete", { id: order.orderID }),
         iconClassName: "delete-icon fas fa-trash-alt",
         onClick: () => deleteOrder(order.orderID),
       }));
@@ -245,7 +245,7 @@ function displayRevenue() {
         .reduce((total, order) => total + order.orderTotal, 0);
 
     resultElement.innerHTML = `
-        <span>Total Revenue: $${totalRevenue.toFixed(2)}</span>
+        <span>${t("orders.totalRevenue", { amount: formatCurrency(totalRevenue) })}</span>
     `;
 }
 
@@ -262,7 +262,8 @@ function editRow(orderID) {
     document.getElementById("order-total").value = orderToEdit.orderTotal;
     document.getElementById("order-status").value = orderToEdit.orderStatus;
 
-    document.getElementById("submitBtn").textContent = "Update";
+    document.getElementById("submitBtn").dataset.mode = "update";
+    document.getElementById("submitBtn").textContent = t("common.update");
 
     document.getElementById("order-form").style.display = "block";
     clearStatusMessage();
@@ -277,7 +278,7 @@ function deleteOrder(orderID) {
       localStorage.setItem("bizTrackOrders", JSON.stringify(orders));
 
       renderOrders(orders);
-      showStatusMessage(`Order ${orderID} deleted successfully.`);
+      showStatusMessage(t("orders.msg.deleted", { id: orderID }));
   }
 }
 
@@ -302,7 +303,7 @@ function updateOrder(orderID) {
         };
 
         if (isDuplicateID(updatedOrder.orderID, orderID)) {
-            showStatusMessage("Order ID already exists. Please use a unique ID.", "error");
+            showStatusMessage(t("orders.msg.duplicate"), "error");
             return;
         }
 
@@ -311,10 +312,11 @@ function updateOrder(orderID) {
         localStorage.setItem("bizTrackOrders", JSON.stringify(orders));
 
         renderOrders(orders);
-        showStatusMessage(`Order ${updatedOrder.orderID} updated successfully.`);
+        showStatusMessage(t("orders.msg.updated", { id: updatedOrder.orderID }));
 
         document.getElementById("order-form").reset();
-        document.getElementById("submitBtn").textContent = "Add";
+        document.getElementById("submitBtn").dataset.mode = "add";
+        document.getElementById("submitBtn").textContent = t("common.add");
         closeForm();
     }
 }
@@ -406,3 +408,9 @@ function generateCSV(data) {
 
     return `${headers}\n${rows.join('\n')}`;
 }
+
+document.addEventListener("biztrack:languagechange", function () {
+    renderOrders(orders);
+    const submitButton = document.getElementById("submitBtn");
+    submitButton.textContent = t(submitButton.dataset.mode === "update" ? "common.update" : "common.add");
+});

@@ -77,10 +77,10 @@ function init() {
 
 function addOrUpdate(event) {
   event.preventDefault();
-  let type = document.getElementById("submitBtn").textContent;
-  if (type === 'Add') {
+  let type = document.getElementById("submitBtn").dataset.mode;
+  if (type === 'add') {
       newProduct(event);
-  } else if (type === 'Update'){
+  } else if (type === 'update'){
       const prodID = document.getElementById("product-id").value;
       updateProduct(prodID);
   }
@@ -96,7 +96,7 @@ function newProduct(event) {
   const prodSold = parseInt(document.getElementById("product-sold").value);
 
   if (isDuplicateID(prodID, null)) {
-    showStatusMessage("Product ID already exists. Please use a unique ID.", "error");
+    showStatusMessage(t("products.msg.duplicate"), "error");
     return;
   }
 
@@ -113,7 +113,7 @@ function newProduct(event) {
 
   renderProducts(products);
   localStorage.setItem("bizTrackProducts", JSON.stringify(products));
-  showStatusMessage(`Product ${prodID} added successfully.`);
+  showStatusMessage(t("products.msg.added", { id: prodID }));
   document.getElementById("product-form").reset();
   closeForm();
 }
@@ -162,23 +162,23 @@ function renderProducts(products) {
       prodRow.dataset.prodSold = product.prodSold;
 
       prodRow.appendChild(createCell(product.prodID));
-      prodRow.appendChild(createCell(product.prodName));
+      prodRow.appendChild(createCell(translateDynamicValue("productName", product.prodName)));
       prodRow.appendChild(createCell(product.prodDesc));
-      prodRow.appendChild(createCell(product.prodCat));
-      prodRow.appendChild(createCell(`$${product.prodPrice.toFixed(2)}`));
+      prodRow.appendChild(createCell(translateDynamicValue("category", product.prodCat)));
+      prodRow.appendChild(createCell(formatCurrency(product.prodPrice)));
       prodRow.appendChild(createCell(String(product.prodSold)));
 
       const actionCell = document.createElement("td");
       actionCell.className = "action";
 
       actionCell.appendChild(createActionIcon({
-        label: `Edit product ${product.prodID}`,
+        label: t("products.action.edit", { id: product.prodID }),
         iconClassName: "edit-icon fa-solid fa-pen-to-square",
         onClick: () => editRow(product.prodID),
       }));
 
       actionCell.appendChild(createActionIcon({
-        label: `Delete product ${product.prodID}`,
+        label: t("products.action.delete", { id: product.prodID }),
         iconClassName: "delete-icon fas fa-trash-alt",
         onClick: () => deleteProduct(product.prodID),
       }));
@@ -198,7 +198,8 @@ function editRow(prodID) {
   document.getElementById("product-price").value = productToEdit.prodPrice;
   document.getElementById("product-sold").value = productToEdit.prodSold;
 
-  document.getElementById("submitBtn").textContent = "Update";
+  document.getElementById("submitBtn").dataset.mode = "update";
+  document.getElementById("submitBtn").textContent = t("common.update");
 
   document.getElementById("product-form").style.display = "block";
   clearStatusMessage();
@@ -213,7 +214,7 @@ function deleteProduct(prodID) {
       localStorage.setItem("bizTrackProducts", JSON.stringify(products));
 
       renderProducts(products);
-      showStatusMessage(`Product ${prodID} deleted successfully.`);
+      showStatusMessage(t("products.msg.deleted", { id: prodID }));
   }
 }
 
@@ -231,7 +232,7 @@ function updateProduct(prodID) {
         };
 
         if (isDuplicateID(updatedProduct.prodID, prodID)) {
-            showStatusMessage("Product ID already exists. Please use a unique ID.", "error");
+            showStatusMessage(t("products.msg.duplicate"), "error");
             return;
         }
 
@@ -240,10 +241,11 @@ function updateProduct(prodID) {
         localStorage.setItem("bizTrackProducts", JSON.stringify(products));
 
         renderProducts(products);
-        showStatusMessage(`Product ${updatedProduct.prodID} updated successfully.`);
+        showStatusMessage(t("products.msg.updated", { id: updatedProduct.prodID }));
 
         document.getElementById("product-form").reset();
-        document.getElementById("submitBtn").textContent = "Add";
+        document.getElementById("submitBtn").dataset.mode = "add";
+        document.getElementById("submitBtn").textContent = t("common.add");
         closeForm();
     }
 }
@@ -334,3 +336,8 @@ function generateCSV(data) {
 }
 
 init();
+document.addEventListener("biztrack:languagechange", function () {
+  renderProducts(products);
+  const submitButton = document.getElementById("submitBtn");
+  submitButton.textContent = t(submitButton.dataset.mode === "update" ? "common.update" : "common.add");
+});

@@ -12,14 +12,14 @@
     <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
     <title>Help - BizTrack</title>
 </head>
-<body>
+<body data-page-title-key="titles.help">
     <div id="sidebar" class="sidebar">
         <div class="logo">
             <a href="./index.html">
                 <i class="fas fa-b"></i>
                 <span>BizTrack</span>
             </a>
-            <button type="button" class="icon-button sidebar-close" aria-label="Close sidebar" onclick="closeSidebar()">
+            <button type="button" class="icon-button sidebar-close" data-i18n-aria-label="common.closeSidebar" aria-label="Close sidebar" onclick="closeSidebar()">
                 <i class="fa-solid fa-xmark" aria-hidden="true"></i>
             </button>
         </div>
@@ -27,43 +27,43 @@
             <li>
                 <a href="./index.html">
                     <i class="fa-solid fa-gauge-high"></i>
-                    <span>Dashboard</span>
+                    <span data-i18n="nav.dashboard">Dashboard</span>
                 </a>
             </li>
             <li>
                 <a href="./products.html">
                     <i class="fas fa-dolly"></i>
-                    <span>Products</span>
+                    <span data-i18n="nav.products">Products</span>
                 </a>
             </li>
             <li>
                 <a href="./orders.html">
                     <i class="fas fa-shopping-cart"></i>
-                    <span>Orders</span>
+                    <span data-i18n="nav.orders">Orders</span>
                 </a>
             </li>
             <li>
                 <a href="./finances.html">
                     <i class="fas fa-sack-dollar"></i>
-                    <span>Expenses</span>
+                    <span data-i18n="nav.expenses">Expenses</span>
                 </a>
             </li>
             <li class="active">
                 <a href="./help.html">
                     <i class="fas fa-question-circle"></i>
-                    <span>Help</span>
+                    <span data-i18n="nav.help">Help</span>
                 </a>
             </li>
             <li>
                 <a href="./privacy.html">
                     <i class="fa-solid fa-shield-halved"></i>
-                    <span>Privacy Policy</span>
+                    <span data-i18n="nav.privacy">Privacy Policy</span>
                 </a>
             </li>
             <li class="logout">
                 <a href="./about.html">
                     <i class="fa-solid fa-users-line"></i>
-                    <span>Meet the Developer</span>
+                    <span data-i18n="nav.about">Meet the Developer</span>
                 </a>
             </li>
         </ul>
@@ -71,11 +71,25 @@
 
     <div class="main-content">
         <div class="header-wrapper">
-            <button type="button" class="menu-icon icon-button" aria-label="Open sidebar" onclick="openSidebar()">
-                <i class="fa-solid fa-bars" aria-hidden="true"></i>
-            </button>
+            <div class="header-tools">
+                <button type="button" class="menu-icon icon-button header-tool-button" data-i18n-aria-label="common.openSidebar" aria-label="Open sidebar" onclick="openSidebar()">
+                    <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                </button>
+                <div class="language-picker language-picker--header">
+                    <button type="button" id="language-toggle" class="language-toggle language-toggle--header" data-i18n-aria-label="common.language" aria-label="Language" aria-expanded="false">
+                        <span class="language-toggle__icon language-toggle__icon--header"><i class="fa-solid fa-globe" aria-hidden="true"></i></span>
+                        <span id="current-language-code" class="language-toggle__code language-toggle__code--header">EN</span>
+                    </button>
+                    <div id="language-menu" class="language-menu language-menu--header" role="menu">
+                        <button type="button" data-language-option="en" class="language-option" role="menuitem">English</button>
+                        <button type="button" data-language-option="zh" class="language-option" role="menuitem">中文</button>
+                        <button type="button" data-language-option="fr" class="language-option" role="menuitem">Français</button>
+                        <button type="button" data-language-option="ja" class="language-option" role="menuitem">日本語</button>
+                    </div>
+                </div>
+            </div>
             <div class="header-title">
-                <h2>Using BizTrack: A Quick Guide</h2>
+                <h2 data-i18n="help.header">Using BizTrack: A Quick Guide</h2>
             </div>
             <div class="user-info">
             </div>
@@ -84,50 +98,50 @@
         <div class="guide-container">
             <section id="using-biztrack">
                 <article>
-                    <h3 class="main-title">What is BizTrack?</h3>
-                    <p>BizTrack is your go-to business management tool designed with small business owners in mind. It's an all-in-one platform that helps you effortlessly manage your products, track orders, and stay on top of your finances. Let me walk you through the basics:</p>
+                    <h3 class="main-title" data-i18n="help.whatIs">What is BizTrack?</h3>
+                    <p data-i18n="help.whatIsBody">BizTrack is your go-to business management tool designed with small business owners in mind. It's an all-in-one platform that helps you effortlessly manage your products, track orders, and stay on top of your finances. Let me walk you through the basics:</p>
                 </article>
                 <article>
-                    <h3 class="main-title">Navigating the Dashboard</h3>
-                    <p>The Dashboard is your central hub, giving you a snapshot of your business's overall performance. Here, you'll find key metrics like total expenses, revenues, profits and the number of orders. It's your command center for a quick overview.</p>
+                    <h3 class="main-title" data-i18n="help.dashboardTitle">Navigating the Dashboard</h3>
+                    <p data-i18n="help.dashboardBody">The Dashboard is your central hub, giving you a snapshot of your business's overall performance. Here, you'll find key metrics like total expenses, revenues, profits and the number of orders. It's your command center for a quick overview.</p>
                 </article>
                 <article>
-                    <h3 class="main-title">Expenses Page</h3>
+                    <h3 class="main-title" data-i18n="help.expensesTitle">Expenses Page</h3>
                     <ol>
-                        <li><b>Record Your Expenses: </b>Head to the Expenses page to add your business expenses. Fill in the date, choose a category, enter the amount, and jot down any notes. It's that simple.</li>
-                        <li><b>Edit or Delete Expenses: </b>Edit or Delete Expenses: Made a mistake? No worries! You can easily edit or delete expense records right from the Expenses page.</li>
+                        <li data-i18n-html="help.expensesItem1"><b>Record Your Expenses:</b> Head to the Expenses page to add your business expenses. Fill in the date, choose a category, enter the amount, and jot down any notes. It's that simple.</li>
+                        <li data-i18n-html="help.expensesItem2"><b>Edit or Delete Expenses:</b> Made a mistake? No worries. You can easily edit or delete expense records right from the Expenses page.</li>
                     </ol>
                 </article>
                 <article>
-                    <h3 class="main-title">Orders Page</h3>
+                    <h3 class="main-title" data-i18n="help.ordersTitle">Orders Page</h3>
                     <ol>
-                        <li><b>Track Your Orders: </b>On the Orders page, you can keep tabs on all your orders. Each entry details the product, quantity, and order status.</li>
-                        <li><b>Effortless Editing: </b>Need to update an order status? Click the "Edit" button and make your changes. It's hassle-free.</li>
+                        <li data-i18n-html="help.ordersItem1"><b>Track Your Orders:</b> On the Orders page, you can keep tabs on all your orders. Each entry details the product, quantity, and order status.</li>
+                        <li data-i18n-html="help.ordersItem2"><b>Effortless Editing:</b> Need to update an order status? Click the Edit button and make your changes.</li>
                     </ol>
                 </article>
                 <article>
-                    <h3 class="main-title">Adding a New Expense, Order or Product</h3>
+                    <h3 class="main-title" data-i18n="help.addingTitle">Adding a New Expense, Order or Product</h3>
                     <ol>
-                        <li>Click on "Add Expense" or the equivalent button on the order or product page.</li>
-                        <li>Fill in the product details or order details or transaction date, category, amount, and any notes.</li>
-                        <li>Hit "Done," and you're all set. Your order, product or transaction will now appear in the respective page and on the Dashboard.</li>
+                        <li data-i18n="help.addingItem1">Click on Add Expense or the equivalent button on the order or product page.</li>
+                        <li data-i18n="help.addingItem2">Fill in the product details or order details or transaction date, category, amount, and any notes.</li>
+                        <li data-i18n="help.addingItem3">Hit Done, and you're all set. Your order, product or transaction will now appear in the respective page and on the Dashboard.</li>
                     </ol>
                 </article>
                 <article>
-                    <h3 class="main-title">Sorting and Searching Entries/Tables</h3>
+                    <h3 class="main-title" data-i18n="help.sortingTitle">Sorting and Searching Entries/Tables</h3>
                     <ol>
-                        <li>Click on any column heading (headers) to sort the entries in the table by that column in either ascending order or alphabetical order.</li>
-                        <li>You can also search for a particular product, order or expense by entrering the value in the search box at the top of the respective page.</li>
+                        <li data-i18n="help.sortingItem1">Click on any column heading to sort the entries in the table by that column.</li>
+                        <li data-i18n="help.sortingItem2">You can also search for a particular product, order or expense by entering a value in the search box at the top of the page.</li>
                     </ol>
                 </article>
                 <article>
-                    <h3 class="main-title">Export to CSV</h3>
-                    <p>Want to keep a backup or analyze your data elsewhere? Simply click on "Export to CSV" to download a CSV file with all your business data.</p>
-                    <p>BizTrack is designed to be intuitive, user-friendly, and adaptable to your business needs. Explore the different pages, try out the features, and let BizTrack simplify your small business management.</p>
+                    <h3 class="main-title" data-i18n="help.exportTitle">Export to CSV</h3>
+                    <p data-i18n="help.exportBody1">Want to keep a backup or analyze your data elsewhere? Simply click on Export to CSV to download a CSV file with all your business data.</p>
+                    <p data-i18n="help.exportBody2">BizTrack is designed to be intuitive, user-friendly, and adaptable to your business needs. Explore the different pages, try out the features, and let BizTrack simplify your small business management.</p>
                 </article>
             </section>
             <section id="contact">
-                <p>Have questions, feedback, or just want to connect? Feel free to reach out!</p>
+                <p data-i18n="help.contactBody">Have questions, feedback, or just want to connect? Feel free to reach out!</p>
                 <ul class="contact-icon">
                     <li>
                         <a href="https://www.linkedin.com/in/sumayyahmusa/" target="_blank" rel="noopener noreferrer">
@@ -148,14 +162,16 @@
             </section>
         </div>
         <footer class="site-footer">
-            <p>BizTrack keeps data in your browser only.</p>
+            <p data-i18n="footer.storageNotice">BizTrack keeps data in your browser only.</p>
             <div class="site-footer__links">
-                <a href="./privacy.html">Privacy Policy</a>
-                <button type="button" class="footer-link-button" onclick="resetCookieConsent()">Cookie settings</button>
+                <a href="./privacy.html" data-i18n="footer.privacyPolicy">Privacy Policy</a>
+                <button type="button" class="footer-link-button" data-i18n="footer.cookieSettings" onclick="resetCookieConsent()">Cookie settings</button>
             </div>
         </footer>
     </div>
 
+    <script src="./i18n.js"></script>
     <script src="./help.js"></script>
     <script src="./cookie-banner.js"></script>
 </body>
+</html>
