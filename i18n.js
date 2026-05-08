@@ -928,7 +928,16 @@ function setLanguage(language) {
   const nextLanguage = bizTrackTranslations[language] ? language : bizTrackDefaultLanguage;
   localStorage.setItem(bizTrackLanguageKey, nextLanguage);
   applyTranslations();
-  document.dispatchEvent(new CustomEvent("biztrack:languagechange", { detail: { language: nextLanguage } }));
+  const CustomEventConstructor =
+    typeof CustomEvent === "function"
+      ? CustomEvent
+      : typeof window !== "undefined" && typeof window.CustomEvent === "function"
+        ? window.CustomEvent
+        : null;
+
+  if (CustomEventConstructor) {
+    document.dispatchEvent(new CustomEventConstructor("biztrack:languagechange", { detail: { language: nextLanguage } }));
+  }
 }
 
 function formatCurrency(amount) {
@@ -1023,7 +1032,11 @@ function initializeLanguageSwitcher() {
   applyTranslations();
 }
 
-document.addEventListener("DOMContentLoaded", initializeLanguageSwitcher);
+if (typeof document !== "undefined") {
+  if (!(typeof window !== "undefined" && window.__BIZTRACK_DISABLE_AUTO_INIT__)) {
+    document.addEventListener("DOMContentLoaded", initializeLanguageSwitcher);
+  }
+}
 
 window.bizTrackTranslations = bizTrackTranslations;
 window.getCurrentLanguage = getCurrentLanguage;
@@ -1032,3 +1045,24 @@ window.t = t;
 window.formatCurrency = formatCurrency;
 window.translateDynamicValue = translateDynamicValue;
 window.applyTranslations = applyTranslations;
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    bizTrackLanguageKey,
+    bizTrackDefaultLanguage,
+    bizTrackLocaleMap,
+    bizTrackLanguageOptions,
+    bizTrackValueKeyMaps,
+    bizTrackTranslations,
+    getCurrentLanguage,
+    getTranslationValue,
+    interpolateTranslation,
+    t,
+    templateFor,
+    setLanguage,
+    formatCurrency,
+    translateDynamicValue,
+    applyTranslations,
+    initializeLanguageSwitcher,
+  };
+}

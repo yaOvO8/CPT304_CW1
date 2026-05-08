@@ -109,3 +109,18 @@ function resetCookieConsent() {
 
 document.addEventListener("DOMContentLoaded", initializeCookieBanner);
 document.addEventListener("biztrack:languagechange", rerenderCookieBanner);
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    cookieConsentStorageKey,
+    getCookieConsentValue,
+    setCookieConsentValue,
+    closeCookieBanner,
+    showCookieBanner,
+    handleCookieConsent,
+    createCookieBanner,
+    rerenderCookieBanner,
+    initializeCookieBanner,
+    resetCookieConsent,
+  };
+}

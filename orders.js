@@ -20,7 +20,7 @@ function closeForm() {
 
 let orders = [];
 
-window.onload = function () {
+function initializeOrdersPage() {
     const storedOrders = localStorage.getItem("bizTrackOrders");
     if (storedOrders) {
         orders = JSON.parse(storedOrders);
@@ -355,19 +355,13 @@ function sortTable(column, button) {
     sortedRows.forEach(row => tbody.appendChild(row));
 }
 
-document.getElementById("searchInput").addEventListener("keyup", function(event) {
-    if (event.key === "Enter") {
-        performSearch();
-    }
-});
-
-
 function performSearch() {
     const searchInput = document.getElementById("searchInput").value.toLowerCase();
     const rows = document.querySelectorAll(".order-row");
 
     rows.forEach(row => {
-        const visible = row.innerText.toLowerCase().includes(searchInput);
+        const text = (row.innerText || row.textContent || "").toLowerCase();
+        const visible = text.includes(searchInput);
         row.style.display = visible ? "table-row" : "none";
     });
 }
@@ -388,7 +382,7 @@ function exportToCSV() {
         };
     });
   
-    const csvContent = generateCSV(ordersToExport);
+    const csvContent = bizTrackCore.generateCSV(ordersToExport);
   
     const blob = new Blob([csvContent], { type: 'text/csv' });
   
@@ -401,16 +395,72 @@ function exportToCSV() {
   
     document.body.removeChild(link);
 }
-  
-function generateCSV(data) {
-    const headers = Object.keys(data[0]).join(',');
-    const rows = data.map(order => Object.values(order).join(','));
-
-    return `${headers}\n${rows.join('\n')}`;
-}
 
 document.addEventListener("biztrack:languagechange", function () {
     renderOrders(orders);
     const submitButton = document.getElementById("submitBtn");
-    submitButton.textContent = t(submitButton.dataset.mode === "update" ? "common.update" : "common.add");
+    if (submitButton) {
+        submitButton.textContent = t(submitButton.dataset.mode === "update" ? "common.update" : "common.add");
+    }
 });
+
+function handleOrderSearchKeyup(event) {
+    if (event.key === "Enter") {
+        performSearch();
+    }
+}
+
+function handleOrdersLanguageChange() {
+    renderOrders(orders);
+    const submitButton = document.getElementById("submitBtn");
+    if (submitButton) {
+        submitButton.textContent = t(submitButton.dataset.mode === "update" ? "common.update" : "common.add");
+    }
+}
+
+function getOrdersState() {
+    return orders;
+}
+
+function setOrdersState(nextOrders) {
+    orders = nextOrders;
+}
+
+if (typeof document !== "undefined") {
+    const shouldAutoInit = !(typeof window !== "undefined" && window.__BIZTRACK_DISABLE_AUTO_INIT__);
+    if (shouldAutoInit) {
+        initializeOrdersPage();
+    }
+
+    const searchInput = document.getElementById("searchInput");
+    if (searchInput) {
+        searchInput.addEventListener("keyup", handleOrderSearchKeyup);
+    }
+}
+
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = {
+        openSidebar,
+        closeSidebar,
+        openForm,
+        closeForm,
+        initializeOrdersPage,
+        addOrUpdate,
+        newOrder,
+        createCell,
+        createActionIcon,
+        renderOrders,
+        displayRevenue,
+        editRow,
+        deleteOrder,
+        updateOrder,
+        isDuplicateID,
+        sortTable,
+        performSearch,
+        exportToCSV,
+        handleOrderSearchKeyup,
+        handleOrdersLanguageChange,
+        getOrdersState,
+        setOrdersState,
+    };
+}

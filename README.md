@@ -37,3 +37,11 @@ This project represents my growth, determination, and love for coding. I hope yo
 ## 🤝 Acknowledgments
 
 A special thanks to my coach, [Sam](https://github.com/samwise-nl), for the invaluable guidance and support provided throughout the development of this project, and the [GetCoding NL](https://www.getcoding.ca/coaching-program-nl) software development program team for their continuous check-ins.
+
+## Testing
+
+- Install dependencies with `npm install`
+- Run automated tests with `npm test`
+- Generate an Istanbul coverage report with `npm run coverage`
+
+Coverage output is generated in the `coverage/` folder and uploaded by GitHub Actions to Codecov.

@@ -20,7 +20,7 @@ function closeForm() {
 
 let transactions = [];
 
-window.onload = function () {
+function initializeFinancesPage() {
     const storedTransactions = localStorage.getItem("bizTrackTransactions");
     if (storedTransactions) {
         transactions = JSON.parse(storedTransactions);
@@ -81,15 +81,6 @@ function addOrUpdate(event) {
     }
 }
 
-function getNextTransactionID() {
-    if (transactions.length === 0) {
-        return 1;
-    }
-    const highestID = Math.max(...transactions.map(transaction => Number(transaction.trID) || 0));
-    return highestID + 1;
-}
-
-
 function newTransaction(event) {
     event.preventDefault();
     const trDate = document.getElementById("tr-date").value;
@@ -97,7 +88,7 @@ function newTransaction(event) {
     const trAmount = parseFloat(document.getElementById("tr-amount").value);
     const trNotes = document.getElementById("tr-notes").value;
 
-    const trID = getNextTransactionID();
+    const trID = bizTrackCore.getNextTransactionID(transactions);
     
     const transaction = {
         trID,
@@ -284,19 +275,13 @@ function sortTable(column, button) {
     sortedRows.forEach(row => tbody.appendChild(row));
 }
 
-document.getElementById("searchInput").addEventListener("keyup", function(event) {
-    if (event.key === "Enter") {
-        performSearch();
-    }
-});
-
-
 function performSearch() {
     const searchInput = document.getElementById("searchInput").value.toLowerCase();
     const rows = document.querySelectorAll(".transaction-row");
 
     rows.forEach(row => {
-        const visible = row.innerText.toLowerCase().includes(searchInput);
+        const text = (row.innerText || row.textContent || "").toLowerCase();
+        const visible = text.includes(searchInput);
         row.style.display = visible ? "table-row" : "none";
     });
 }
@@ -313,7 +298,7 @@ function exportToCSV() {
         };
     });
   
-    const csvContent = generateCSV(transactionsToExport);
+    const csvContent = bizTrackCore.generateCSV(transactionsToExport);
   
     const blob = new Blob([csvContent], { type: 'text/csv' });
   
@@ -326,16 +311,71 @@ function exportToCSV() {
   
     document.body.removeChild(link);
 }
-  
-function generateCSV(data) {
-    const headers = Object.keys(data[0]).join(',');
-    const rows = data.map(order => Object.values(order).join(','));
-
-    return `${headers}\n${rows.join('\n')}`;
-}
 
 document.addEventListener("biztrack:languagechange", function () {
     renderTransactions(transactions);
     const submitButton = document.getElementById("submitBtn");
-    submitButton.textContent = t(submitButton.dataset.mode === "update" ? "common.update" : "common.add");
+    if (submitButton) {
+        submitButton.textContent = t(submitButton.dataset.mode === "update" ? "common.update" : "common.add");
+    }
 });
+
+function handleFinanceSearchKeyup(event) {
+    if (event.key === "Enter") {
+        performSearch();
+    }
+}
+
+function handleFinancesLanguageChange() {
+    renderTransactions(transactions);
+    const submitButton = document.getElementById("submitBtn");
+    if (submitButton) {
+        submitButton.textContent = t(submitButton.dataset.mode === "update" ? "common.update" : "common.add");
+    }
+}
+
+function getTransactionsState() {
+    return transactions;
+}
+
+function setTransactionsState(nextTransactions) {
+    transactions = nextTransactions;
+}
+
+if (typeof document !== "undefined") {
+    const shouldAutoInit = !(typeof window !== "undefined" && window.__BIZTRACK_DISABLE_AUTO_INIT__);
+    if (shouldAutoInit) {
+        initializeFinancesPage();
+    }
+
+    const searchInput = document.getElementById("searchInput");
+    if (searchInput) {
+        searchInput.addEventListener("keyup", handleFinanceSearchKeyup);
+    }
+}
+
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = {
+        openSidebar,
+        closeSidebar,
+        openForm,
+        closeForm,
+        initializeFinancesPage,
+        addOrUpdate,
+        newTransaction,
+        createCell,
+        createActionIcon,
+        renderTransactions,
+        displayExpenses,
+        editRow,
+        deleteTransaction,
+        updateTransaction,
+        sortTable,
+        performSearch,
+        exportToCSV,
+        handleFinanceSearchKeyup,
+        handleFinancesLanguageChange,
+        getTransactionsState,
+        setTransactionsState,
+    };
+}
