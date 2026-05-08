@@ -5,7 +5,7 @@
   "main": "cookie-banner.js",
   "scripts": {
     "test": "node tests/run-tests.js",
-    "coverage": "nyc --reporter=text --reporter=html --reporter=lcov --branches=70 --functions=80 --lines=80 --statements=80 --include=biztrack-core.js --include=feedback.js --include=cookie-banner.js node tests/run-tests.js"
+    "coverage": "nyc --reporter=text --reporter=html --reporter=lcov --branches=70 --functions=80 --lines=80 --statements=80 --include=biztrack-core.js --include=feedback.js --include=cookie-banner.js --include=help.js --include=script.js --include=products.js --include=orders.js --include=finances.js --include=i18n.js node tests/run-tests.js"
   },
   "repository": {
     "type": "git",

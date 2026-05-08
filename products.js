@@ -284,19 +284,13 @@ function sortTable(column, button) {
     sortedRows.forEach(row => tbody.appendChild(row));
 }
 
-document.getElementById("searchInput").addEventListener("keyup", function(event) {
-    if (event.key === "Enter") {
-        performSearch();
-    }
-});
-
-
 function performSearch() {
     const searchInput = document.getElementById("searchInput").value.toLowerCase();
     const rows = document.querySelectorAll(".product-row");
 
     rows.forEach(row => {
-        const visible = row.innerText.toLowerCase().includes(searchInput);
+        const text = (row.innerText || row.textContent || "").toLowerCase();
+        const visible = text.includes(searchInput);
         row.style.display = visible ? "table-row" : "none";
     });
 }
@@ -328,9 +322,69 @@ function exportToCSV() {
   document.body.removeChild(link);
 }
 
-init();
-document.addEventListener("biztrack:languagechange", function () {
+function handleProductSearchKeyup(event) {
+    if (event.key === "Enter") {
+        performSearch();
+    }
+}
+
+function handleProductsLanguageChange() {
   renderProducts(products);
   const submitButton = document.getElementById("submitBtn");
-  submitButton.textContent = t(submitButton.dataset.mode === "update" ? "common.update" : "common.add");
-});
+  if (submitButton) {
+    submitButton.textContent = t(submitButton.dataset.mode === "update" ? "common.update" : "common.add");
+  }
+}
+
+function initializeProductsPage() {
+  init();
+
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) {
+    searchInput.addEventListener("keyup", handleProductSearchKeyup);
+  }
+
+  document.addEventListener("biztrack:languagechange", handleProductsLanguageChange);
+}
+
+function getProductsState() {
+  return products;
+}
+
+function setProductsState(nextProducts) {
+  products = nextProducts;
+}
+
+if (typeof document !== "undefined") {
+  const shouldAutoInit = !(typeof window !== "undefined" && window.__BIZTRACK_DISABLE_AUTO_INIT__);
+  if (shouldAutoInit) {
+    initializeProductsPage();
+  }
+}
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    openSidebar,
+    closeSidebar,
+    openForm,
+    closeForm,
+    init,
+    addOrUpdate,
+    newProduct,
+    createCell,
+    createActionIcon,
+    renderProducts,
+    editRow,
+    deleteProduct,
+    updateProduct,
+    isDuplicateID,
+    sortTable,
+    performSearch,
+    exportToCSV,
+    handleProductSearchKeyup,
+    handleProductsLanguageChange,
+    initializeProductsPage,
+    getProductsState,
+    setProductsState,
+  };
+}

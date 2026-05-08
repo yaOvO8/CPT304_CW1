@@ -8,3 +8,10 @@ function openSidebar() {
 function closeSidebar() {
     document.getElementById('sidebar').style.display = 'none';
 }
+
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = {
+        openSidebar,
+        closeSidebar,
+    };
+}

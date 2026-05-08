@@ -4,6 +4,12 @@ const testFiles = [
   "./core.test.js",
   "./feedback.test.js",
   "./cookie-banner.test.js",
+  "./help.test.js",
+  "./script.test.js",
+  "./products.test.js",
+  "./orders.test.js",
+  "./finances.test.js",
+  "./i18n.test.js",
 ];
 
 let failures = 0;

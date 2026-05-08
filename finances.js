@@ -20,7 +20,7 @@ function closeForm() {
 
 let transactions = [];
 
-window.onload = function () {
+function initializeFinancesPage() {
     const storedTransactions = localStorage.getItem("bizTrackTransactions");
     if (storedTransactions) {
         transactions = JSON.parse(storedTransactions);
@@ -275,19 +275,13 @@ function sortTable(column, button) {
     sortedRows.forEach(row => tbody.appendChild(row));
 }
 
-document.getElementById("searchInput").addEventListener("keyup", function(event) {
-    if (event.key === "Enter") {
-        performSearch();
-    }
-});
-
-
 function performSearch() {
     const searchInput = document.getElementById("searchInput").value.toLowerCase();
     const rows = document.querySelectorAll(".transaction-row");
 
     rows.forEach(row => {
-        const visible = row.innerText.toLowerCase().includes(searchInput);
+        const text = (row.innerText || row.textContent || "").toLowerCase();
+        const visible = text.includes(searchInput);
         row.style.display = visible ? "table-row" : "none";
     });
 }
@@ -321,5 +315,67 @@ function exportToCSV() {
 document.addEventListener("biztrack:languagechange", function () {
     renderTransactions(transactions);
     const submitButton = document.getElementById("submitBtn");
-    submitButton.textContent = t(submitButton.dataset.mode === "update" ? "common.update" : "common.add");
+    if (submitButton) {
+        submitButton.textContent = t(submitButton.dataset.mode === "update" ? "common.update" : "common.add");
+    }
 });
+
+function handleFinanceSearchKeyup(event) {
+    if (event.key === "Enter") {
+        performSearch();
+    }
+}
+
+function handleFinancesLanguageChange() {
+    renderTransactions(transactions);
+    const submitButton = document.getElementById("submitBtn");
+    if (submitButton) {
+        submitButton.textContent = t(submitButton.dataset.mode === "update" ? "common.update" : "common.add");
+    }
+}
+
+function getTransactionsState() {
+    return transactions;
+}
+
+function setTransactionsState(nextTransactions) {
+    transactions = nextTransactions;
+}
+
+if (typeof document !== "undefined") {
+    const shouldAutoInit = !(typeof window !== "undefined" && window.__BIZTRACK_DISABLE_AUTO_INIT__);
+    if (shouldAutoInit) {
+        initializeFinancesPage();
+    }
+
+    const searchInput = document.getElementById("searchInput");
+    if (searchInput) {
+        searchInput.addEventListener("keyup", handleFinanceSearchKeyup);
+    }
+}
+
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = {
+        openSidebar,
+        closeSidebar,
+        openForm,
+        closeForm,
+        initializeFinancesPage,
+        addOrUpdate,
+        newTransaction,
+        createCell,
+        createActionIcon,
+        renderTransactions,
+        displayExpenses,
+        editRow,
+        deleteTransaction,
+        updateTransaction,
+        sortTable,
+        performSearch,
+        exportToCSV,
+        handleFinanceSearchKeyup,
+        handleFinancesLanguageChange,
+        getTransactionsState,
+        setTransactionsState,
+    };
+}

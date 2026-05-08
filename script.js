@@ -11,6 +11,10 @@ function closeSidebar() {
 
 
 window.onload = function () {
+  if (window.__BIZTRACK_DISABLE_AUTO_INIT__) {
+    return;
+  }
+
   renderDashboardSummary();
 };
 
@@ -364,3 +368,12 @@ document.addEventListener("biztrack:languagechange", function () {
   renderDashboardSummary();
   initializeChart();
 });
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    openSidebar,
+    closeSidebar,
+    renderDashboardSummary,
+    initializeChart,
+  };
+}
