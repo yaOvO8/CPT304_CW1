@@ -110,8 +110,8 @@ function renderDashboardSummary() {
   },
   ];
 
-  const totalExpenses = calculateExpTotal(expenses);
-  const totalRevenues = calculateRevTotal(revenues);
+  const totalExpenses = bizTrackCore.calculateExpTotal(expenses);
+  const totalRevenues = bizTrackCore.calculateRevTotal(revenues);
   const totalBalance = totalRevenues - totalExpenses;
   const numOrders = revenues.length;
 
@@ -141,34 +141,9 @@ function renderDashboardSummary() {
   `;
 }
 
-function calculateExpTotal(transactions) {
-  return transactions.reduce((total, transaction) => total + transaction.trAmount, 0);
-}
-function calculateRevTotal(orders) {
-  return orders.reduce((total, order) => total + order.orderTotal, 0);
-}
-
-
 // ---------- CHARTS ----------
 
 // BAR CHART
-
-function calculateCategorySales(products) {
-  const categorySales = {};
-
-  products.forEach(product => {
-    const category = product.prodCat;
-
-    if (!categorySales[category]) {
-      categorySales[category] = 0;
-    }
-
-    categorySales[category] += product.prodPrice * product.prodSold;
-  });
-
-  return categorySales;
-}
-
 
 function initializeChart() {
   const existingBarChart = document.querySelector("#bar-chart");
@@ -224,7 +199,7 @@ function initializeChart() {
       prodSold: 40
     },
   ];
-  const categorySalesData = calculateCategorySales(items);
+  const categorySalesData = bizTrackCore.calculateCategorySales(items);
 
   const sortedCategorySales = Object.entries(categorySalesData)
     .sort(([, a], [, b]) => b - a)
@@ -292,22 +267,6 @@ function initializeChart() {
 
   // DONUT CHART
 
-  function calculateCategoryExp(transactions) {
-    const categoryExpenses = {};
-
-    transactions.forEach(transaction => {
-      const category = transaction.trCategory;
-
-      if (!categoryExpenses[category]) {
-        categoryExpenses[category] = 0;
-      }
-
-      categoryExpenses[category] += transaction.trAmount;
-    });
-
-    return categoryExpenses;
-  }
-
   const expItems = JSON.parse(localStorage.getItem('bizTrackTransactions')) || [
     {
       trID: 1,
@@ -345,7 +304,7 @@ function initializeChart() {
       trNotes: "Pizza"
   },
   ];
-  const categoryExpData = calculateCategoryExp(expItems);
+  const categoryExpData = bizTrackCore.calculateCategoryExp(expItems);
 
   const donutChartOptions = {
     series: Object.values(categoryExpData),

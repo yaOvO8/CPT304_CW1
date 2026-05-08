@@ -1,0 +1,26 @@
+{
+  "name": "biztrack-main",
+  "version": "1.0.0",
+  "description": "BizTrack is a web app born from my experience running a small business. It’s a tool designed to simplify managing products, orders, and expenses seamlessly. As a small business owner, I created BizTrack to simplify the complexities of managing products, orders, and expenses. The inspiration for this project came from the challenges I faced in my own business. I wanted to develop a solution that could benefit “myself” and others in a similar situation.",
+  "main": "cookie-banner.js",
+  "scripts": {
+    "test": "node tests/run-tests.js",
+    "coverage": "nyc --reporter=text --reporter=html --reporter=lcov --branches=70 --functions=80 --lines=80 --statements=80 --include=biztrack-core.js --include=feedback.js --include=cookie-banner.js node tests/run-tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yaOvO8/CPT304_CW1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/yaOvO8/CPT304_CW1/issues"
+  },
+  "homepage": "https://github.com/yaOvO8/CPT304_CW1#readme",
+  "devDependencies": {
+    "jsdom": "^29.1.1",
+    "nyc": "^18.0.0"
+  }
+}

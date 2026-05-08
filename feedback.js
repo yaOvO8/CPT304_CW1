@@ -33,3 +33,10 @@ function clearStatusMessage() {
   region.setAttribute("role", "status");
   region.setAttribute("aria-live", "polite");
 }
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    showStatusMessage,
+    clearStatusMessage,
+  };
+}

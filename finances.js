@@ -81,15 +81,6 @@ function addOrUpdate(event) {
     }
 }
 
-function getNextTransactionID() {
-    if (transactions.length === 0) {
-        return 1;
-    }
-    const highestID = Math.max(...transactions.map(transaction => Number(transaction.trID) || 0));
-    return highestID + 1;
-}
-
-
 function newTransaction(event) {
     event.preventDefault();
     const trDate = document.getElementById("tr-date").value;
@@ -97,7 +88,7 @@ function newTransaction(event) {
     const trAmount = parseFloat(document.getElementById("tr-amount").value);
     const trNotes = document.getElementById("tr-notes").value;
 
-    const trID = getNextTransactionID();
+    const trID = bizTrackCore.getNextTransactionID(transactions);
     
     const transaction = {
         trID,
@@ -313,7 +304,7 @@ function exportToCSV() {
         };
     });
   
-    const csvContent = generateCSV(transactionsToExport);
+    const csvContent = bizTrackCore.generateCSV(transactionsToExport);
   
     const blob = new Blob([csvContent], { type: 'text/csv' });
   
@@ -325,13 +316,6 @@ function exportToCSV() {
     link.click();
   
     document.body.removeChild(link);
-}
-  
-function generateCSV(data) {
-    const headers = Object.keys(data[0]).join(',');
-    const rows = data.map(order => Object.values(order).join(','));
-
-    return `${headers}\n${rows.join('\n')}`;
 }
 
 document.addEventListener("biztrack:languagechange", function () {

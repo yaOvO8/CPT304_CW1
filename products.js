@@ -314,7 +314,7 @@ function exportToCSV() {
       };
   });
 
-  const csvContent = generateCSV(productsToExport);
+  const csvContent = bizTrackCore.generateCSV(productsToExport);
 
   const blob = new Blob([csvContent], { type: 'text/csv' });
 
@@ -326,13 +326,6 @@ function exportToCSV() {
   link.click();
 
   document.body.removeChild(link);
-}
-
-function generateCSV(data) {
-  const headers = Object.keys(data[0]).join(',');
-  const rows = data.map(order => Object.values(order).join(','));
-
-  return `${headers}\n${rows.join('\n')}`;
 }
 
 init();
