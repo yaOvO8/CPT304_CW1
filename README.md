@@ -1,6 +1,7 @@
-# BizTrack Project
+﻿# 📋 BizTrack Project
+[![codecov](https://codecov.io/github/yaOvO8/CPT304_CW1/graph/badge.svg?token=LHYNEVLPH1)](https://codecov.io/github/yaOvO8/CPT304_CW1)
 
-BizTrack is a web app born from my experience running a small business. It’s a tool designed to simplify managing products, orders, and expenses seamlessly. As a small business owner, I created BizTrack to simplify the complexities of managing products, orders, and expenses. The inspiration for this project came from the challenges I faced in my own business. I wanted to develop a solution that could benefit “myself�?and others in a similar situation.
+BizTrack is a web app born from my experience running a small business. It’s a tool designed to simplify managing products, orders, and expenses seamlessly. As a small business owner, I created BizTrack to simplify the complexities of managing products, orders, and expenses. The inspiration for this project came from the challenges I faced in my own business. I wanted to develop a solution that could benefit “myself” and others in a similar situation.
 
 ## 📝 DEMO
 
