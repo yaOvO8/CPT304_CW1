@@ -5,7 +5,7 @@ BizTrack is a front-end order and business management application that was selec
 
 ## 📝 DEMO
 
-Please refer to --- https://sumusa.github.io/biztrack/.
+Please refer to --- https://cpt-304-cw-1.vercel.app/.
 
 ## 📷 Screenshots
 
