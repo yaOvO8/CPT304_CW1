@@ -1,7 +1,7 @@
 ﻿# 📋 BizTrack Project
 [![codecov](https://codecov.io/github/yaOvO8/CPT304_CW1/graph/badge.svg?token=LHYNEVLPH1)](https://codecov.io/github/yaOvO8/CPT304_CW1)
 
-BizTrack is a web app born from my experience running a small business. It’s a tool designed to simplify managing products, orders, and expenses seamlessly. As a small business owner, I created BizTrack to simplify the complexities of managing products, orders, and expenses. The inspiration for this project came from the challenges I faced in my own business. I wanted to develop a solution that could benefit “myself” and others in a similar situation.
+BizTrack is a front-end order and business management application that was selected and enhanced as part of the CPT304 Software Engineering 2 coursework. Starting from the original open-source project, our team audited the codebase, identified concrete deficiencies, and implemented targeted improvements to accessibility, security, usability, internationalization, testing, and compliance. The current version is a research-led refinement of the original BizTrack app rather than a first-pass prototype.
 
 ## 📝 DEMO
 
@@ -9,25 +9,24 @@ Please refer to --- https://sumusa.github.io/biztrack/.
 
 ## 📷 Screenshots
 
-![Biztrack Home page](assets/biztrack-home.png)
+![Enhanced BizTrack dashboard](assets/biztrack-dashboard-updated.png)
 
 ## 📌 Features
 
-- **Product Management**: Add, edit, or remove products with a user-friendly interface.
-- **Order Tracking**: View order details and status and manage the entire order fulfillment process from processing to delivery.
-- **Expenses Management**: Log expenses, categorize them and maintain a clear overview of all financial transactions.
-- **Insightful Dashboard**: Gives a quick snapshot of the business with a dashboard that displays summary stats such as revenue, expenses, the number of orders, and current balance.
-- **Search and Sort Entries**: Sort through the product, order and expense tables using the column headers.
-- **Analytics**: Explore sales by product category and track expenses with visually appealing charts
-- **Export to CSV**: Download all data tables into CSV seamlessly.
+- **Accessible CRUD Workflows**: Products, orders, and expenses can be added, edited, deleted, searched, and sorted through improved keyboard-accessible controls.
+- **Localized Interface**: The application includes internationalization support with a working language switcher for multiple languages.
+- **Dashboard and Analytics**: Business summary cards and charts present revenue, expenses, order volume, balance, category sales, and expense distribution.
+- **Safer Rendering Logic**: Table rendering has been hardened to reduce unsafe DOM injection patterns and improve front-end security.
+- **User Feedback and Status Messaging**: CRUD actions provide clearer success and error feedback to improve usability and reduce ambiguity.
+- **CSV Export**: Core business datasets can be exported for reporting and backup purposes.
+- **Privacy and Consent Support**: The app includes a privacy policy page and cookie/banner controls aligned with coursework baseline expectations.
+- **Automated Test Coverage**: Core business modules are covered by automated tests with coverage reporting through Istanbul and Codecov.
 
 ## 💪🏾 Motivation
 
-Why this project? 😼 It all started with my eagerness to learn more about web development. This project marks the end of my first module in the Get Coding program, and boy, have I learned a lot!
+This repository documents the enhanced version of BizTrack developed for a research-led software improvement task. Our goal was not only to make the application work, but to raise it toward a more professional standard by auditing the original code, fixing meaningful deficiencies, and aligning the system with modern expectations around accessibility, maintainability, testing, and responsible deployment.
 
-From understanding how JavaScript functions work to making web pages interactive, it's been quite the journey. One of the coolest parts was learning how to visualize data using ApexCharts library, which made everything more interesting. Through experimenting with different techniques like loops and if statements, I've not only improved my coding skills but also learned how to make websites easier to use for everyone.
-
-This project represents my growth, determination, and love for coding. I hope you enjoy checking it out as much as I enjoyed making it!
+The project also reflects a practical software engineering process: deficiency detection, literature-informed refactoring, baseline compliance work, collaborative version control, and evidence-driven validation. In that sense, the repository captures both the improved product and the engineering work behind the improvement.
 
 ## 💻 Tech Stack Used
 
