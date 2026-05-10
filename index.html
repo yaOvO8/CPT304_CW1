@@ -166,10 +166,14 @@
 
     <!-- Apex Charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.45.2/apexcharts.min.js"></script>
-    <script src="./i18n.js"></script>
-    <script src="./biztrack-core.js"></script>
-    <script src="./script.js"></script>
-    <script src="./cookie-banner.js"></script>
-    <script>initializeChart()</script>
+    <script src="./i18n.js" defer></script>
+    <script src="./biztrack-core.js" defer></script>
+    <script src="./script.js" defer></script>
+    <script src="./cookie-banner.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeChart();
+        });
+    </script>
 </body>
 </html>
