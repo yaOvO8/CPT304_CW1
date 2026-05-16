@@ -101,7 +101,7 @@ function newTransaction(event) {
     transactions.push(transaction);
     renderTransactions(transactions);
     localStorage.setItem("bizTrackTransactions", JSON.stringify(transactions));
-    showStatusMessage(t("expenses.msg.added", { id: trID }));
+    showStatusMessage(t("expenses.msg.added"));
     displayExpenses();
     document.getElementById("transaction-form").reset();
     closeForm();
@@ -215,7 +215,7 @@ function deleteTransaction(trID) {
         localStorage.setItem("bizTrackTransactions", JSON.stringify(transactions));
 
         renderTransactions(transactions);
-        showStatusMessage(t("expenses.msg.deleted", { id: trID }));
+        showStatusMessage(t("expenses.msg.deleted"));
     }
 }
 
@@ -236,7 +236,7 @@ function deleteTransaction(trID) {
         localStorage.setItem("bizTrackTransactions", JSON.stringify(transactions));
 
         renderTransactions(transactions);
-        showStatusMessage(t("expenses.msg.updated", { id: updatedTransaction.trID }));
+        showStatusMessage(t("expenses.msg.updated"));
 
         document.getElementById("transaction-form").reset();
         document.getElementById("submitBtn").dataset.mode = "add";
